@@ -10,27 +10,23 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _aboveGroundCamera = null;
     [SerializeField] private CinemachineVirtualCamera _underGroundCamera = null;
 
-    private bool _isAboveGround = true;
+    public CharacterController characterController;
 
     private void Start()
     {
+        characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         SetCameraMode(CameraMode.AboveGround);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (characterController.isAboveGround)
         {
-            _isAboveGround = !_isAboveGround;
-
-            if (_isAboveGround)
-            {
-                SetCameraMode(CameraMode.AboveGround);
-            }
-            else
-            {
-                SetCameraMode(CameraMode.UnderGround);
-            }
+            SetCameraMode(CameraMode.AboveGround);
+        }
+        else
+        {
+            SetCameraMode(CameraMode.UnderGround);
         }
     }
 

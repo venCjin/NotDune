@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    public bool isAboveGround { get; private set; }
+
     [SerializeField] private float _maxSpeed = 6f;
     [SerializeField] private float _acceleration = 5f;
     [SerializeField] private float _deceleration = 10f;
@@ -19,6 +21,14 @@ public class CharacterController : MonoBehaviour
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isAboveGround = !isAboveGround;
+        }
     }
 
     public void FixedUpdate()
