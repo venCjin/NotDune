@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,21 +11,26 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _aboveGroundCamera = null;
     [SerializeField] private CinemachineVirtualCamera _underGroundCamera = null;
 
-    public CharacterController characterController;
+    private CharacterController _characterController;
 
-    private void Start()
+    private void Awake()
     {
-        characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
-        SetCameraMode(CameraMode.AboveGround);
+        _characterController = FindObjectOfType<CharacterController>();
+        _characterController.OnStateChanged += OnStateChanged;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if (characterController.isAboveGround)
+        _characterController.OnStateChanged -= OnStateChanged;
+    }
+
+    private void OnStateChanged(Type state)
+    {
+        if (state == typeof(AboveGroundMovementState))
         {
             SetCameraMode(CameraMode.AboveGround);
         }
-        else
+        else if (state == typeof(UnderGroundMovementState))
         {
             SetCameraMode(CameraMode.UnderGround);
         }
