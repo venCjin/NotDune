@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDamageable
 {
     private CharacterController _characterController;
     private NavMeshAgent _agent;
     private Transform _target;
+    private ColorController _colorController;
     private float _shotRange = 5.0f;
     public ParticleSystem rippleParticle;
     private bool wasCharacterAboveGround;
     private MeshRenderer meshRenderer;
+    [SerializeField] private ParticleSystem _shootParticle;
+
+    private int _health = 100;
+
+    private float _lastShootTime = 0.0f;
+    private float _shootCooldown = 0.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +24,7 @@ public class EnemyAI : MonoBehaviour
         _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         _target = GameObject.FindGameObjectWithTag("Player").transform;
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
+        _colorController = GetComponent<ColorController>();
         meshRenderer = GetComponent<MeshRenderer>();
 
         rippleParticle.Stop();
@@ -37,6 +45,8 @@ public class EnemyAI : MonoBehaviour
             else // player is in shot range
             {
                 _agent.isStopped = true;
+
+                if (Time.time > _lastShootTime + _shootCooldown)
                 Shoot();
             }
         }
@@ -63,6 +73,23 @@ public class EnemyAI : MonoBehaviour
 
     void Shoot()
     {
+        FindObjectOfType<CharacterController>().ReceiveDamage(5);
 
+        _shootParticle.Play();
+        _lastShootTime = Time.time;
+    }
+
+    public void ReceiveDamage(int damage)
+    {
+        _health -= damage;
+
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _colorController.HighLight();
+        }
     }
 }

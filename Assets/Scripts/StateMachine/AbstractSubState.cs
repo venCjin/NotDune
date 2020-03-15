@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractState : MonoBehaviour
+public class AbstractSubState : MonoBehaviour
 {
-    public AbstractState[] transitions;
-    public AbstractSubState[] subStates;
-    public AbstractAction[] actions;
-
     virtual public bool IsStateReady(ref StateMachine stateMachine) { return false; }
     virtual public void OnStateEnter(ref StateMachine stateMachine) { }
     virtual public void OnStateUpdate(ref StateMachine stateMachine) { }

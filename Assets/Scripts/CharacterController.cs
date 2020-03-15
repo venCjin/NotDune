@@ -11,6 +11,7 @@ public class CharacterController : StateMachine
         public Transform transform;
         public Rigidbody rigidbody;
         public GameObject states;
+        public ColorController colorController;
     }
 
     [SerializeField] private References _references;
@@ -25,4 +26,9 @@ public class CharacterController : StateMachine
     public new Transform transform { get => _references.transform; }
     public new Rigidbody rigidbody { get => _references.rigidbody; }
     public GameObject states { get => _references.states; }
+
+    public void ReceiveDamage(int damage)
+    {
+        _references.colorController.HighLight();
+    }
 }

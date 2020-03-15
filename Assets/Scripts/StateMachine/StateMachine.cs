@@ -7,6 +7,7 @@ using System;
 public class StateMachine : MonoBehaviour
 {
     [SerializeField] public AbstractState _currentState;
+    private List<AbstractSubState> _currentSubStates = new List<AbstractSubState>();
 
     public UnityAction<System.Type> OnStateChanged = null;
 
@@ -33,6 +34,40 @@ public class StateMachine : MonoBehaviour
         if (_currentState != null)
         {
             _currentState.OnStateUpdate(ref stateMachine);
+
+            foreach (var action in _currentState.actions)
+            {
+                if (action.IsActionReady())
+                {
+                    action.OnActionPerformed();
+                }
+            }
+
+            foreach (var substate in _currentState.subStates)
+            {
+                if (_currentSubStates.Contains(substate)) { continue; }
+
+                if (substate.IsStateReady(ref stateMachine))
+                {
+                    _currentSubStates.Add(substate);
+                    substate.OnStateEnter(ref stateMachine);
+                }
+            }
+
+            for (int i = 0; i < _currentSubStates.Count; i++)
+            {
+                var substate = _currentSubStates[i];
+
+                if (substate.IsStateFinished())
+                {
+                    _currentSubStates.Remove(substate);
+                    substate.OnStateExit();
+                }
+                else
+                {
+                    substate.OnStateUpdate(ref stateMachine);
+                }
+            }
         }
     }
 
@@ -42,6 +77,11 @@ public class StateMachine : MonoBehaviour
         {
             var stateMachine = this;
             _currentState.OnStateFixedUpdate(ref stateMachine);
+
+            foreach (var substate in _currentSubStates)
+            {
+                substate.OnStateFixedUpdate(ref stateMachine);
+            }
         }
     }
 
@@ -49,6 +89,12 @@ public class StateMachine : MonoBehaviour
     {
         if (_currentState != null)
             _currentState.OnStateExit();
+
+        foreach(var substate in _currentSubStates)
+            substate.OnStateExit();
+
+        _currentSubStates.Clear();
+
 
         _currentState = newState;
 
