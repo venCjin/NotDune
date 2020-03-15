@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122235cd1c047b14381ee6da49f81c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyState: 0
+  fleeRange: 5
   rippleParticle: {fileID: 6677696307718039251}
 --- !u!195 &2061065153701309095
 NavMeshAgent:
