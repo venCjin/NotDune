@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Cinemachine;
 
 public class EnemyAI : MonoBehaviour, IDamageable
 {
@@ -12,6 +13,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     private bool wasCharacterAboveGround;
     private MeshRenderer meshRenderer;
     [SerializeField] private ParticleSystem _shootParticle;
+    private CinemachineImpulseSource _impulseSource;
 
     private int _health = 100;
 
@@ -26,6 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
         _colorController = GetComponent<ColorController>();
         meshRenderer = GetComponent<MeshRenderer>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
 
         rippleParticle.Stop();
     }
@@ -74,6 +77,7 @@ public class EnemyAI : MonoBehaviour, IDamageable
     void Shoot()
     {
         FindObjectOfType<CharacterController>().ReceiveDamage(5);
+        _impulseSource.GenerateImpulse();
 
         _shootParticle.Play();
         _lastShootTime = Time.time;

@@ -6,11 +6,16 @@ public class MaterialManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public Material material;
+    public List<Material> materials = new List<Material>();
     private bool onSurface = true;
     void Start()
     {
-        material = GetComponent<MeshRenderer>().material;
+        materials.Add(GetComponent<MeshRenderer>().material);
+        foreach (var m in GetComponentsInChildren<MeshRenderer>())
+        {
+            materials.Add(m.material);
+        }
+
         UpdateMaterial();
     }
 
@@ -26,18 +31,22 @@ public class MaterialManager : MonoBehaviour
 
     private void UpdateMaterial()
     {
-        if (onSurface)
+        foreach (var material in materials)
         {
-            material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
-            material.SetOverrideTag("RenderType", "Opaque");
-            //material.renderQueue = 2000;
+            if (onSurface)
+            {
+                    material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
+                    material.SetOverrideTag("RenderType", "Opaque");
+                    //material.renderQueue = 2000;
+            }
+            else 
+            {
+                    material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+                    material.SetOverrideTag("RenderType", "Transparent");
+                    //material.renderQueue = 3000;
+            }
+
+            material.SetInt("_OnSurface", (onSurface) ? 1 : 0);
         }
-        else 
-        {
-            material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
-            material.SetOverrideTag("RenderType", "Transparent");
-            //material.renderQueue = 3000;
-        }
-        material.SetInt("_OnSurface", (onSurface) ? 1 : 0);
     }
 }

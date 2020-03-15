@@ -12,7 +12,15 @@ public class AttackAction : AbstractAction
         public LayerMask layerMask = 1;
     }
 
+    [System.Serializable]
+    public class References
+    {
+        public Cinemachine.CinemachineImpulseSource impulseSource;
+    }
+
     [SerializeField] private Parameters _parameters;
+    [SerializeField] private References _references;
+
     private CharacterController _character;
 
     private void Awake()
@@ -40,5 +48,18 @@ public class AttackAction : AbstractAction
                 Debug.Log(hit.transform.name + " hit!");
             }
         }
+
+        if (hits.Length > 0)
+        {
+            _references.impulseSource.GenerateImpulse();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_character == null) { return; }
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_character.transform.position + _character.transform.forward * _parameters.hitDistance, 1.5f);
     }
 }
