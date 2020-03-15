@@ -16,12 +16,12 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         _characterController = FindObjectOfType<CharacterController>();
-        _characterController.OnStateChanged += OnStateChanged;
+       // _characterController.OnStateChanged += OnStateChanged;
     }
 
     private void OnDestroy()
     {
-        _characterController.OnStateChanged -= OnStateChanged;
+        //_characterController.OnStateChanged -= OnStateChanged;
     }
 
     private void OnStateChanged(Type state)

@@ -8,7 +8,6 @@ public class EnemyAI : MonoBehaviour
     private Transform _target;
     private float _shotRange = 5.0f;
     public ParticleSystem rippleParticle;
-    private bool wasCharacterAboveGround;
     private MeshRenderer meshRenderer;
 
     // Start is called before the first frame update
@@ -18,6 +17,8 @@ public class EnemyAI : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag("Player").transform;
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
         meshRenderer = GetComponent<MeshRenderer>();
+        _characterController.OnStateChanged += OnStateChanged;
+
 
         rippleParticle.Stop();
     }
@@ -25,7 +26,7 @@ public class EnemyAI : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (_characterController.isAboveGround)
+        if (_characterController._isAboveGround)
         {
             float distance = Vector3.Distance(transform.position, _target.position);
 
@@ -41,24 +42,22 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        if (_characterController.isAboveGround != wasCharacterAboveGround)
+    }
+
+    private void OnStateChanged(CharacterController.State state)
+    {
+        if (state == CharacterController.State.AboveGround)
         {
-            if (_characterController.isAboveGround)
-            {
-                rippleParticle.Clear();
-                rippleParticle.Stop();
-                
-                meshRenderer.enabled = true;
-            }
-            else
-            {
-                rippleParticle.Play();
-                meshRenderer.enabled = false;
-            }
+            rippleParticle.Clear();
+            rippleParticle.Stop();
+
+            meshRenderer.enabled = true;
         }
-
-        wasCharacterAboveGround = _characterController.isAboveGround;
-
+        else
+        {
+            rippleParticle.Play();
+            meshRenderer.enabled = false;
+        }
     }
 
     void Shoot()

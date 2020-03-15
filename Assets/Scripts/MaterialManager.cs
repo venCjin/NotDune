@@ -7,37 +7,33 @@ public class MaterialManager : MonoBehaviour
     // Start is called before the first frame update
 
     public Material material;
-    private bool onSurface = true;
+    private CharacterController _characterController;
+
     void Start()
     {
+        _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+
+        _characterController.OnStateChanged += OnStateChanged;
+
         material = GetComponent<MeshRenderer>().material;
-        UpdateMaterial();
-    }
+        OnStateChanged(CharacterController.State.AboveGround);
+    }   
 
-    // Update is called once per frame
-    public void Update()
+    private void OnStateChanged(CharacterController.State state)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {      
-            onSurface = !onSurface;
-            UpdateMaterial();     
-        }
-    }
-
-    private void UpdateMaterial()
-    {
-        if (onSurface)
+        if (state == CharacterController.State.AboveGround)
         {
             material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
             material.SetOverrideTag("RenderType", "Opaque");
             //material.renderQueue = 2000;
         }
-        else 
+        else if (state == CharacterController.State.UnderGround)
         {
             material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
             material.SetOverrideTag("RenderType", "Transparent");
             //material.renderQueue = 3000;
         }
-        material.SetInt("_OnSurface", (onSurface) ? 1 : 0);
+
+        material.SetInt("_OnSurface", (state == CharacterController.State.AboveGround) ? 1 : 0);
     }
 }
