@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private EnemyState _enemyState;
     public float fleeRange;
+    public GameObject bulletPrefab;
     private CharacterController _characterController;
     private NavMeshAgent _agent;
     private Transform _target;
@@ -14,6 +15,8 @@ public class EnemyAI : MonoBehaviour
     public ParticleSystem rippleParticle;
     private MeshRenderer meshRenderer;
     private EnemyHP _HP;
+    public float ShotingCooldown;
+    private float _currentTime;
 
     // Start is called before the first frame update
     void Start()
@@ -72,12 +75,7 @@ public class EnemyAI : MonoBehaviour
         {
 
         }
-
-        if (_HP.GetHP() < _HP.MaxHP)
-        {
-            //_enemyState = EnemyState.Retreat;
-        }
-
+        _currentTime += Time.fixedDeltaTime;
     }
 
     private void OnStateChanged(CharacterController.State state)
@@ -107,6 +105,17 @@ public class EnemyAI : MonoBehaviour
 
     void Shoot()
     {
-
+        if(_currentTime > ShotingCooldown)
+        {
+            Vector3 v =  _target.position - transform.position;
+            v.Normalize();
+            //v += transform.position;
+            GameObject buff = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            //v.y = 0.0f;
+            Debug.DrawLine(transform.position, _target.position);
+            buff.GetComponent<EnemyBullet>().dir = v;
+            _currentTime = 0.0f;
+        }
+   
     }
 }
