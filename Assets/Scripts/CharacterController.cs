@@ -30,7 +30,11 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _attackMaxSpeed = 30f;
     [SerializeField] private float _attackAcceleration = 40f;
     [SerializeField] private float _aboveGroundAttackRadius = 2.5f;
+    [SerializeField] private float _underGroundAttackRadius = 2f;
     [SerializeField] GameObject _attackedEnemy = null;
+
+
+    [SerializeField] private float _goTime = 0f;
     private void Start()
     {
         t = transform;
@@ -42,8 +46,10 @@ public class CharacterController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (_state == State.AboveGround)
+                Attack();
+
             ChangeState(State.AboveGround);
-            Attack();
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -115,9 +121,13 @@ public class CharacterController : MonoBehaviour
     {
         if (_state == State.UnderGround) return false;
 
-        rb.transform.position -= 1.25f * Vector3.up;
+        //rb.transform.position -= 1.25f * Vector3.up;
+        //rb.transform.position = new Vector3(rb.transform.position.x, -1f, rb.transform.position.z);
+        StartCoroutine(GoCoroutine(Vector3.up * -1.5f));
+        //t.position = new Vector3(t.position.x, -1f, t.position.z);
+
         rb.velocity = Vector3.zero;
-        rb.useGravity = false;
+        //rb.useGravity = false;
 
         _currentMaxSpeed = _underGroundSpeed;
         return true;
@@ -139,9 +149,26 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-        rb.transform.position += 1.25f * Vector3.up;
+        bool attack = false;
+        foreach (EnemyAI enemy in GameManager.instance.enemiesList)
+        {
+            if (Vector3.Distance(new Vector3(enemy.transform.position.x, 0f, enemy.transform.position.z), new Vector3(t.position.x, 0f, t.position.z)) < _underGroundAttackRadius)
+            {
+                _attackedEnemy = enemy.gameObject;
+                attack = true;
+                break;
+            }
+        }
+        if (attack)
+            StartCoroutine(AttackFromUndergroundCoroutine(_attackedEnemy.transform));
+        else
+            StartCoroutine(GoCoroutine(Vector3.up * 1.5f));
+
+        //t.position = new Vector3(t.position.x, 0.5f, t.position.z);
+
+
         rb.velocity = Vector3.zero;
-        rb.useGravity = true;
+        //rb.useGravity = true;
 
         _currentMaxSpeed = _aboveGroundSpeed;
         return true;
@@ -150,7 +177,6 @@ public class CharacterController : MonoBehaviour
     private void Attack()
     {
         Vector3 attackDirection = Vector3.zero;
-
 
         foreach (EnemyAI enemy in GameManager.instance.enemiesList)
         {
@@ -177,8 +203,6 @@ public class CharacterController : MonoBehaviour
 
         while (timer < _attackTime)
         {
-
-
             if (enemyTransform)
             {
                 attackDirection = (enemyTransform.position - t.position).normalized;
@@ -187,19 +211,59 @@ public class CharacterController : MonoBehaviour
 
             _currentVelocity = Vector3.Lerp(_currentVelocity, attackDirection * _attackMaxSpeed, _attackAcceleration * Time.fixedDeltaTime);
 
-
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
         _currentVelocity *= 0.2f;
         _attackedEnemy = null;
         _isAttacking = false;
+    }
 
+    private IEnumerator AttackFromUndergroundCoroutine(Transform enemyTransform)
+    {
+        float timer = 0;
+        _isAttacking = true;
+        _currentVelocity = Vector3.zero;
+
+        while (timer < _attackTime)
+        {
+            Vector3 enemyVector = (enemyTransform.position - t.position);
+            Vector3 attackDirection = Vector3.ProjectOnPlane(enemyVector.normalized, Vector3.up);
+            t.Translate(enemyVector * (Time.fixedDeltaTime / _goTime));
+
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        t.position = new Vector3(t.position.x, 0.5f, t.position.z);
+
+        _currentVelocity *= 0.2f;
+        _attackedEnemy = null;
+        _isAttacking = false;
+    }
+
+
+    private IEnumerator GoCoroutine(Vector3 direction)
+    {
+        float timer = 0;
+
+        while (timer < _goTime)
+        {
+            //float percentage = timer / _goTime;
+            t.Translate(direction * (Time.fixedDeltaTime / _goTime));
+
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (direction.y > 0f)
+            t.position = new Vector3(t.position.x, 0.5f, t.position.z);
+        else
+            t.position = new Vector3(t.position.x, -1f, t.position.z);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_isAttacking && other.gameObject == _attackedEnemy)
+        if (other.CompareTag("Enemy") && _isAttacking)
         {
             _attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
             Debug.Log("ENEMY");
