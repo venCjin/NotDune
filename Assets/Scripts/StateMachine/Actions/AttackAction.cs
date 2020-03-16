@@ -8,8 +8,9 @@ public class AttackAction : AbstractAction
     public class Parameters
     {
         [Range(0, 100)] public int damage = 30;
-        public float hitDistance = 1.5f;
+        public float hitDistance = 1.0f;
         public LayerMask layerMask = 1;
+        public float hitSphereRaduis = 1.0f;
     }
 
     [System.Serializable]
@@ -35,8 +36,8 @@ public class AttackAction : AbstractAction
 
     public override void OnActionPerformed()
     {
-        Ray ray = new Ray(_character.transform.position, _character.transform.forward);
-        var hits = Physics.SphereCastAll(ray, 1.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);
+        Ray ray = new Ray(_character.transform.position + new Vector3(0,0.5f,0), _character.transform.forward);
+        var hits = Physics.SphereCastAll(ray, _parameters.hitSphereRaduis, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);
 
         foreach(var hit in hits)
         {
@@ -45,7 +46,7 @@ public class AttackAction : AbstractAction
             if (enemy != null)
             {
                 enemy.ReceiveDamage(_parameters.damage);
-                Debug.Log(hit.transform.name + " hit!");
+                Debug.Log("Player make " + _parameters.damage + " damege to : " + hit.transform.name);
             }
         }
 
@@ -60,6 +61,6 @@ public class AttackAction : AbstractAction
         if (_character == null) { return; }
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_character.transform.position + _character.transform.forward * _parameters.hitDistance, 1.5f);
+        Gizmos.DrawWireSphere(_character.transform.position + new Vector3(0, 0.5f, 0) + _character.transform.forward * _parameters.hitDistance, _parameters.hitSphereRaduis);
     }
 }

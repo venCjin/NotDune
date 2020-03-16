@@ -23,10 +23,24 @@ public class UnderGroundMovementState : AbstractState
     public override bool IsStateFinished()
     {
         bool buttonPressed = Input.GetKeyDown(KeyCode.Space);
-        bool isSurfaceEmpty = (Physics.CheckSphere(transform.position + 1.5f * Vector3.up, 0.5f, 1) == false);
+        //bool isSurfaceEmpty = (Physics.CheckSphere(transform.position + 1.5f * Vector3.up, 0.5f, 1) == false);
 
+        bool isSurfaceEmpty = Physics.CheckBox(transform.position + 2f * Vector3.up, new Vector3(0.65f, 0.45f, 1.05f)) == false;
+        if (buttonPressed && isSurfaceEmpty)
+        {            
+            Debug.Log("Pos: " + transform.position);
+            Debug.Log("Pos2: " + (transform.position + 2f * Vector3.up));
+        }
         return (buttonPressed && isSurfaceEmpty);
     }
+
+    // DEBUG
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position + 2f * Vector3.up, new Vector3(2* 0.65f, 2* 0.45f, 2* 1.05f));
+    }
+    //------
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
@@ -37,7 +51,7 @@ public class UnderGroundMovementState : AbstractState
 
     public override void OnStateEnter(ref StateMachine stateMachine)
     {
-        _characterController.rigidbody.transform.position -= 1.25f * Vector3.up;
+        _characterController.rigidbody.transform.position -= 1.5f * Vector3.up;
 
         _characterController.rigidbody.velocity = Vector3.zero;
         _characterController.rigidbody.useGravity = false;

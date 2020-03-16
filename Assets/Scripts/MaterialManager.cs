@@ -1,52 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MaterialManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public List<Material> materials = new List<Material>();
-    private bool onSurface = true;
+    private CharacterController _characterController;
+    private bool _onSurface;
+
     void Start()
     {
-        materials.Add(GetComponent<MeshRenderer>().material);
-        foreach (var m in GetComponentsInChildren<MeshRenderer>())
+        materials.Add(GetComponent<SkinnedMeshRenderer>().material);
+        foreach (var m in GetComponentsInChildren<SkinnedMeshRenderer>())
         {
             materials.Add(m.material);
         }
+        UpdateMaterial(typeof(AboveGroundMovementState));
 
-        UpdateMaterial();
+        _characterController = FindObjectOfType<CharacterController>();
+        _characterController.OnStateChanged += UpdateMaterial;
     }
 
     // Update is called once per frame
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {      
-            onSurface = !onSurface;
-            UpdateMaterial();     
-        }
-    }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space) && )
+    //    {
+    //        UpdateMaterial();     
+    //    }
+    //}
 
-    private void UpdateMaterial()
+    private void UpdateMaterial(Type state)
     {
         foreach (var material in materials)
         {
-            if (onSurface)
+            _onSurface = (state == typeof(AboveGroundMovementState));
+            //if (state == typeof(AboveGroundMovementState))
+            if (_onSurface)
             {
                     material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.LessEqual);
                     material.SetOverrideTag("RenderType", "Opaque");
                     //material.renderQueue = 2000;
             }
-            else 
+            //else if (state == typeof(UnderGroundMovementState))
+            else
             {
                     material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
                     material.SetOverrideTag("RenderType", "Transparent");
                     //material.renderQueue = 3000;
             }
 
-            material.SetInt("_OnSurface", (onSurface) ? 1 : 0);
+            material.SetInt("_OnSurface", (_onSurface) ? 1 : 0);
         }
     }
 }
