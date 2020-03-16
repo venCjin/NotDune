@@ -94,13 +94,13 @@ public class EnemyAI : MonoBehaviour
             }
             meshRenderer.enabled = true;
         }
-        else
+        else if (state == CharacterController.State.UnderGround)
         {
             rippleParticle.Play();
             _enemyState = EnemyState.Idle;
             meshRenderer.enabled = false;
         }
-        Debug.Log(_enemyState);
+        //Debug.Log(_enemyState);
     }
 
     void Shoot()

@@ -7,7 +7,7 @@ public class Segment : MonoBehaviour
     public float AboveGroundSpeed;
     public float UnderGroundSpeed;
     private float _speed;
-    public Transform Target;
+    public Transform target;
     private CharacterController _characterController;
     public float _distanceBeetweenSegments;
 
@@ -22,16 +22,14 @@ public class Segment : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float step = _speed * Time.deltaTime;
-        if(Vector3.Distance(Target.position, transform.position) > _distanceBeetweenSegments)
+        if(Vector3.Distance(target.position, transform.position) > _distanceBeetweenSegments)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Target.position, step);
+            transform.Translate(Vector3.forward * _speed * Time.fixedDeltaTime);
         }
-        transform.LookAt(Target.position);
-        transform.Rotate(90, 0, 0);
-
+        transform.LookAt(target.position);
     }
 
     private void OnStateChange(CharacterController.State state)
