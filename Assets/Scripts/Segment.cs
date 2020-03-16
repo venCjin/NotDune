@@ -9,9 +9,7 @@ public class Segment : MonoBehaviour
     private float _speed;
     public Transform Target;
     private CharacterController _characterController;
-
-    [SerializeField]
-    private float _distanceBeetweenSegments = .1f;
+    public float _distanceBeetweenSegments;
 
 
 
@@ -21,7 +19,6 @@ public class Segment : MonoBehaviour
         _speed = AboveGroundSpeed;
         _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         _characterController.OnStateChanged += OnStateChange;
-        _distanceBeetweenSegments = .7f;
     }
 
     // Update is called once per frame
