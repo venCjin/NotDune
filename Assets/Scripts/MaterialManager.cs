@@ -17,7 +17,12 @@ public class MaterialManager : MonoBehaviour
 
         material = GetComponent<MeshRenderer>().material;
         OnStateChanged(CharacterController.State.AboveGround);
-    }   
+    }
+
+    private void OnDestroy()
+    {
+        _characterController.OnStateChanged -= OnStateChanged;
+    }
 
     private void OnStateChanged(CharacterController.State state)
     {

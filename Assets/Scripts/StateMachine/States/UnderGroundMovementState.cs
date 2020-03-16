@@ -37,10 +37,10 @@ public class UnderGroundMovementState : AbstractState
 
     public override void OnStateEnter(ref StateMachine stateMachine)
     {
-        _characterController.rigidbody.transform.position -= 1.25f * Vector3.up;
+        _characterController.rb.transform.position -= 1.25f * Vector3.up;
 
-        _characterController.rigidbody.velocity = Vector3.zero;
-        _characterController.rigidbody.useGravity = false;
+        _characterController.rb.velocity = Vector3.zero;
+        _characterController.rb.useGravity = false;
     }
 
     public override void OnStateExit()
@@ -77,6 +77,6 @@ public class UnderGroundMovementState : AbstractState
             _currentVelocity = Vector3.Lerp(_currentVelocity, Vector3.zero, _deceleration * Time.fixedDeltaTime);
         }
 
-        _characterController.rigidbody.velocity = new Vector3(_currentVelocity.x, _characterController.rigidbody.velocity.y, _currentVelocity.z);
+        _characterController.rb.velocity = new Vector3(_currentVelocity.x, _characterController.rb.velocity.y, _currentVelocity.z);
     }
 }

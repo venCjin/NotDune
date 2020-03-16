@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.enemiesList.Add(this);
         _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         _target = GameObject.FindGameObjectWithTag("Player").transform;
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
@@ -23,10 +24,16 @@ public class EnemyAI : MonoBehaviour
         rippleParticle.Stop();
     }
 
+    private void OnDestroy()
+    {
+        _characterController.OnStateChanged -= OnStateChanged;
+        GameManager.instance.enemiesList.Remove(this);
+    }
+
     void FixedUpdate()
     {
 
-        if (_characterController._isAboveGround)
+        /*if (_characterController._isAboveGround)
         {
             float distance = Vector3.Distance(transform.position, _target.position);
 
@@ -40,7 +47,7 @@ public class EnemyAI : MonoBehaviour
                 _agent.isStopped = true;
                 Shoot();
             }
-        }
+        }*/
 
     }
 
