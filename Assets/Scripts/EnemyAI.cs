@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     {
         if(_enemyState == EnemyState.Attack)
         {
-            if (_characterController._isAboveGround)
+            if (_characterController._state == CharacterController.State.AboveGround)
             {
                 float distance = Vector3.Distance(transform.position, _target.position);
 

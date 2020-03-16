@@ -7,7 +7,7 @@ public class CharacterController : MonoBehaviour
 {
 
     public enum State { AboveGround, UnderGround, None };
-    private State _state = State.None;
+    public State _state = State.None;
     public UnityAction<State> OnStateChanged = null;
 
     public Transform t;
@@ -18,8 +18,7 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] private float _currentMaxSpeed = 0f;
     [SerializeField] private float _acceleration = 5f;
-    [SerializeField] private float _deceleration = 10f;
-    [SerializeField] private float _attackForce = 20f;
+    [SerializeField] private float _deceleration = 20f;
 
     private Vector2 _currentInput = Vector2.zero;
     private Vector3 _currentVelocity = Vector3.zero;
@@ -27,10 +26,10 @@ public class CharacterController : MonoBehaviour
 
     // ATTACK
     [SerializeField] private bool _isAttacking = false;
-    [SerializeField] private float _attackTime = 0.35f;
-    [SerializeField] private float _attackMaxSpeed = 12f;
-    [SerializeField] private float _attackAcceleration = 8f;
-    [SerializeField] private float _aboveGroundAttackRadius = 5f;
+    [SerializeField] private float _attackTime = 0.1f;
+    [SerializeField] private float _attackMaxSpeed = 30f;
+    [SerializeField] private float _attackAcceleration = 40f;
+    [SerializeField] private float _aboveGroundAttackRadius = 2.5f;
     [SerializeField] GameObject _attackedEnemy = null;
     private void Start()
     {
@@ -109,6 +108,7 @@ public class CharacterController : MonoBehaviour
                 OnStateChanged?.Invoke(state);
             }
         }
+
     }
 
     private bool GoUnderGround()
