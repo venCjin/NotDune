@@ -95,7 +95,7 @@ public class CharacterController : MonoBehaviour
             }
 
         }
-        rb.velocity = new Vector3(_currentVelocity.x, rb.velocity.y, _currentVelocity.z);
+        rb.velocity = new Vector3(_currentVelocity.x, 0f, _currentVelocity.z);
 
     }
 
@@ -126,13 +126,23 @@ public class CharacterController : MonoBehaviour
     {
         if (_state == State.UnderGround) return false;
 
-        //rb.transform.position -= 1.25f * Vector3.up;
-        //rb.transform.position = new Vector3(rb.transform.position.x, -1f, rb.transform.position.z);
+
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(t.position, Vector3.down, 5f);
+
+        foreach (RaycastHit rh in hits)
+        {
+            if (rh.collider.CompareTag("Obstacle"))
+            {
+                Debug.Log("Can't go Under Ground - obstacle below");
+                return false;
+            }
+        }
+
         StartCoroutine(GoCoroutine(Vector3.up * -1.5f));
-        //t.position = new Vector3(t.position.x, -1f, t.position.z);
+       
 
         rb.velocity = Vector3.zero;
-        //rb.useGravity = false;
 
         _currentMaxSpeed = _underGroundSpeed;
         return true;

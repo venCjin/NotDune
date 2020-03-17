@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDestroy()
     {
         _characterController.OnStateChanged -= OnStateChanged;
-        GameManager.instance.enemiesList.Remove(this);
+        GameManager.instance?.enemiesList.Remove(this);
     }
 
     void FixedUpdate()
