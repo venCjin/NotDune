@@ -68,7 +68,7 @@ public class UndergroundAttackAction : AbstractAction
                     enemy.ReceiveDamage(_parameters.damage * 2);
                 else
                     enemy.ReceiveDamage(_parameters.damage);
-                Debug.Log(hit.transform.name + " hit!");
+                //Debug.Log(hit.transform.name + " hit!");
             }
         }
 

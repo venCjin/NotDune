@@ -4905,7 +4905,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5858
+  m_Name: pb_Mesh-24714
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5069,6 +5069,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 530085539030517814, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 530085539030517814, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 566231284704246115, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
         type: 3}
       propertyPath: pincerL
@@ -5357,13 +5367,13 @@ PrefabInstance:
     - target: {fileID: 5888073835590361160, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
         type: 3}
       propertyPath: actions.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5888073835590361160, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
         type: 3}
       propertyPath: actions.Array.data[0]
       value: 
-      objectReference: {fileID: 1319229840}
+      objectReference: {fileID: 706972850}
     - target: {fileID: 5888073835590361160, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
         type: 3}
       propertyPath: actions.Array.data[1]
@@ -5438,6 +5448,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460214093778090322, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460214093778090322, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460214093778090322, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8985029977535688133, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
         type: 3}
@@ -6053,7 +6078,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5862
+  m_Name: pb_Mesh-24718
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7162,18 +7187,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192502715}
   m_Mesh: {fileID: 1573314449}
---- !u!114 &1319229840 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1898531757384081519, guid: 4be3ac848a41d0f4bb3cd18953bdff16,
-    type: 3}
-  m_PrefabInstance: {fileID: 605641992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7317a77724c4db0418aa74845eb81302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1326731613
 GameObject:
   m_ObjectHideFlags: 0
