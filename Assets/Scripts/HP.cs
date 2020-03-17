@@ -23,7 +23,7 @@ public class HP : MonoBehaviour
         }
         if(_hp != MaxHP)
         {
-            _material.color = new Color((float)_hp/MaxHP, 0.0f, 0.0f);
+            _material.color = Color.Lerp(Color.white, Color.red, 1.0f-(float)_hp / MaxHP);
             Debug.Log(1 - ((float)_hp / MaxHP));
         }
         else

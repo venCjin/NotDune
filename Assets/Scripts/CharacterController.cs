@@ -312,7 +312,7 @@ public class CharacterController : MonoBehaviour
         if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
             //_attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
-            other.gameObject.GetComponent<EnemyHP>().reduceHP(1);
+            other.gameObject.GetComponent<HP>().reduceHP(1);
             AttackCooldown();
 
         }
