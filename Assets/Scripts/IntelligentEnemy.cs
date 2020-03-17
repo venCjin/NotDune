@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class IntelligentEnemy : StateMachine, IDamageable
 {
@@ -13,6 +14,8 @@ public class IntelligentEnemy : StateMachine, IDamageable
         public float distance = 10.0f;
         public float angle = 45.0f;
         public LayerMask layerMask = 0;
+
+        public float angularAcceleration = 10.0f;
     }
 
 
@@ -47,6 +50,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
     public bool canSeeCharacter { get; private set; }
     public Vector3 lastKnownChatacterPosition { get; private set; }
 
+    public UnityAction OnEnemyTookDamage;
 
     private void Awake()
     {
@@ -90,6 +94,17 @@ public class IntelligentEnemy : StateMachine, IDamageable
 
     public void ReceiveDamage(int damage)
     {
+        OnEnemyTookDamage?.Invoke();
+
+        if (canSeeCharacter == false)
+        {
+            canSeeCharacter = true;
+            lastKnownChatacterPosition = _character.transform.position;
+
+            Vector3 forward = _character.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(forward);
+        }
+
         _health -= damage;
 
         if (_health <= 0)
@@ -112,6 +127,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
         Vector3 direction = _character.transform.position - transform.position;
         Ray ray = new Ray(transform.position, direction);
 
+        direction.y = 0.0f;
         if (Vector3.Angle(direction, transform.forward) > _parameters.angle)
         {
             return false;
