@@ -24,6 +24,8 @@ public class TailAction : AbstractAction
     [SerializeField] private References _references;
 
     private CharacterController _character;
+    private float _lastAttackTime = 0;
+    private float _attackCooldown = 2.0f;
 
     private void Awake()
     {
@@ -32,7 +34,15 @@ public class TailAction : AbstractAction
 
     public override bool IsActionReady()
     {
-        return (Input.GetMouseButtonDown(1) == true);
+        if (Input.GetMouseButtonDown(1) == true)
+        {
+            if (Time.time > _lastAttackTime + _attackCooldown)
+            {
+                _lastAttackTime = Time.time;
+                return true;
+            }
+        }
+        return false;
     }
 
     public override void OnActionPerformed()
