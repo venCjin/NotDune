@@ -26,11 +26,13 @@ public class CharacterController : MonoBehaviour
 
     // ATTACK
     [SerializeField] private bool _isAttacking = false;
+    [SerializeField] private bool _canAttack = true;
     [SerializeField] private float _attackTime = 0.1f;
+    [SerializeField] private float _attackCooldown = 0.1f;
     [SerializeField] private float _attackMaxSpeed = 30f;
     [SerializeField] private float _attackAcceleration = 40f;
     [SerializeField] private float _aboveGroundAttackRadius = 2.5f;
-    [SerializeField] private float _underGroundAttackRadius = 2f;
+    [SerializeField] private float _underGroundAttackRadius = 3f;
     [SerializeField] GameObject _attackedEnemy = null;
 
 
@@ -177,22 +179,36 @@ public class CharacterController : MonoBehaviour
     private void Attack()
     {
         Vector3 attackDirection = Vector3.zero;
+        Transform enemyTransform = null;
+        float previousDistance = _aboveGroundAttackRadius * 2f;
+        float distance = 0f;
+        bool foundEnemy = false;
 
         foreach (EnemyAI enemy in GameManager.instance.enemiesList)
         {
+            distance = attackDirection.magnitude;
             attackDirection = (enemy.transform.position - t.position).normalized;
 
-            if (Vector3.Dot(attackDirection, t.forward) > 0.5f && attackDirection.magnitude < _aboveGroundAttackRadius/*(_isAboveGround) ? aboveGroundAttackRadius : underGroundAttackRadius*/)
+            if (Vector3.Dot(attackDirection, t.forward) > 0.55f && distance < _aboveGroundAttackRadius)
             {
-                _attackedEnemy = enemy.gameObject;
-                StartCoroutine(AttackCoroutine(attackDirection, enemy.transform));
-                break;
+                if (distance < previousDistance)
+                {
+                    enemyTransform = enemy.transform;
+                    previousDistance = distance;
+                    foundEnemy = true;
+                }
+                //_attackedEnemy = enemy.gameObject;
             }
         }
-        attackDirection = t.forward;
-        StartCoroutine(AttackCoroutine(attackDirection, null));
+        if (foundEnemy)
+            StartCoroutine(AttackCoroutine(attackDirection, enemyTransform));
+        else
+        {
+            attackDirection = t.forward;
+            StartCoroutine(AttackCoroutine(attackDirection, null));
+        }
 
-        //rb.AddForce(attackDirection * _attackForce, ForceMode.Impulse);
+
     }
 
     private IEnumerator AttackCoroutine(Vector3 attackDirection, Transform enemyTransform)
@@ -212,6 +228,7 @@ public class CharacterController : MonoBehaviour
             _currentVelocity = Vector3.Lerp(_currentVelocity, attackDirection * _attackMaxSpeed, _attackAcceleration * Time.fixedDeltaTime);
 
             timer += Time.fixedDeltaTime;
+
             yield return new WaitForFixedUpdate();
         }
         _currentVelocity *= 0.2f;
@@ -224,11 +241,16 @@ public class CharacterController : MonoBehaviour
         float timer = 0;
         _isAttacking = true;
         _currentVelocity = Vector3.zero;
+        Vector3 startEnemyPosition = enemyTransform.position;
 
         while (timer < _attackTime)
         {
-            Vector3 enemyVector = (enemyTransform.position - t.position);
-            Vector3 attackDirection = Vector3.ProjectOnPlane(enemyVector.normalized, Vector3.up);
+            Vector3 enemyVector = (startEnemyPosition - t.position);
+            if (enemyTransform)
+            {
+                enemyVector = (enemyTransform.position - t.position);
+                //Vector3 attackDirection = Vector3.ProjectOnPlane(enemyVector.normalized, Vector3.up);
+            }
             t.Translate(enemyVector * (Time.fixedDeltaTime / _goTime));
 
             timer += Time.fixedDeltaTime;
@@ -261,12 +283,23 @@ public class CharacterController : MonoBehaviour
             t.position = new Vector3(t.position.x, -1f, t.position.z);
     }
 
+    private IEnumerator AttackCooldown()
+    {
+        _canAttack = false;
+
+        yield return new WaitForSeconds(_attackCooldown);
+
+        _canAttack = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && _isAttacking)
+        if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
-            _attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
-            Debug.Log("ENEMY");
+            //_attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
+            other.gameObject.GetComponent<EnemyHP>().reduceHP(1);
+            AttackCooldown();
+
         }
     }
 }
