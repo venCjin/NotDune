@@ -51,7 +51,7 @@ public class UnderGroundMovementState : AbstractState
 
     public override void OnStateEnter(ref StateMachine stateMachine)
     {
-        _characterController.rigidbody.transform.position -= 1.5f * Vector3.up;
+        _characterController.rigidbody.transform.position -= 2f * Vector3.up;
 
         _characterController.rigidbody.velocity = Vector3.zero;
         _characterController.rigidbody.useGravity = false;
