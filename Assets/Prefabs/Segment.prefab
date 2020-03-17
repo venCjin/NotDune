@@ -54,8 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5fa6c42af37a3448da47fc545affc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AboveGroundSpeed: 20
-  UnderGroundSpeed: 20
+  AboveGroundSpeed: 5
+  UnderGroundSpeed: 10
   target: {fileID: 0}
   _distanceBeetweenSegments: 0.35
 --- !u!1 &3637368442268548923

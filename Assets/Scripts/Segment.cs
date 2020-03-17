@@ -24,13 +24,13 @@ public class Segment : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _speed = Vector3.Distance(target.position, transform.position) * 10f;
-        //float step = _speed * Time.deltaTime;
+        float step = _speed * Vector3.Distance(target.position, transform.position);
         if (Vector3.Distance(target.position, transform.position) > _distanceBeetweenSegments)
         {
-            transform.Translate(Vector3.forward * _speed * Time.fixedDeltaTime);
+            transform.Translate(Vector3.forward * step * Time.fixedDeltaTime);
         }
         transform.LookAt(target.position);
+       
     }
 
     private void OnStateChange(CharacterController.State state)
