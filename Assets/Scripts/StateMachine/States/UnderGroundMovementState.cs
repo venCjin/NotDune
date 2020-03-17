@@ -26,11 +26,7 @@ public class UnderGroundMovementState : AbstractState
         //bool isSurfaceEmpty = (Physics.CheckSphere(transform.position + 1.5f * Vector3.up, 0.5f, 1) == false);
 
         bool isSurfaceEmpty = Physics.CheckBox(transform.position + 2f * Vector3.up, new Vector3(0.65f, 0.45f, 1.05f)) == false;
-        if (buttonPressed && isSurfaceEmpty)
-        {            
-            Debug.Log("Pos: " + transform.position);
-            Debug.Log("Pos2: " + (transform.position + 2f * Vector3.up));
-        }
+
         return (buttonPressed && isSurfaceEmpty);
     }
 
