@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AttackAction : AbstractAction
 {
+    public Animator animator;
+
     [System.Serializable]
     public class Parameters
     {
@@ -35,6 +37,7 @@ public class AttackAction : AbstractAction
 
     public override void OnActionPerformed()
     {
+        animator.SetTrigger("pincers");
         Ray ray = new Ray(_character.transform.position, _character.transform.forward);
         var hits = Physics.SphereCastAll(ray, 1.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);
 

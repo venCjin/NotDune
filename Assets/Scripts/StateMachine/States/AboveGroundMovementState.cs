@@ -8,6 +8,7 @@ public class AboveGroundMovementState : AbstractState
     [SerializeField] private float _maxSpeed = 6f;
     [SerializeField] private float _acceleration = 5f;
     [SerializeField] private float _deceleration = 10f;
+    
     private CharacterController _characterController;
 
     private Vector2 _currentInput = Vector2.zero;
