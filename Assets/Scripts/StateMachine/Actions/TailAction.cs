@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackAction : AbstractAction
+public class TailAction : AbstractAction
 {
-    public Animator pincerL;
-    public Animator pincerR;
+    public Animator tail;
 
     [System.Serializable]
     public class Parameters
     {
-        [Range(0, 100)] public int damage = 30;
+        [Range(0, 100)] public int damage = 50;
         public float hitDistance = 1.5f;
         public LayerMask layerMask = 1;
     }
@@ -33,17 +32,16 @@ public class AttackAction : AbstractAction
 
     public override bool IsActionReady()
     {
-        return (Input.GetMouseButtonDown(0) == true);
+        return (Input.GetMouseButtonDown(1) == true);
     }
 
     public override void OnActionPerformed()
     {
-        pincerL.SetTrigger("pincer");
-        pincerR.SetTrigger("pincer");
+        tail.SetTrigger("tail");
 
         Ray ray = new Ray(_character.transform.position, _character.transform.forward);
-        var hits = Physics.SphereCastAll(ray, 1.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);
-
+        var hits = Physics.SphereCastAll(ray, 0.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);
+        
         foreach (var hit in hits)
         {
             IDamageable enemy = hit.transform.GetComponent<IDamageable>();
@@ -65,7 +63,7 @@ public class AttackAction : AbstractAction
     {
         if (_character == null) { return; }
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_character.transform.position + _character.transform.forward * _parameters.hitDistance, 1.5f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(_character.transform.position + _character.transform.forward * _parameters.hitDistance, 0.5f);
     }
 }
