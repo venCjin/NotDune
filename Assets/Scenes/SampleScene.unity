@@ -287,6 +287,26 @@ PrefabInstance:
       propertyPath: _enemyState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[1].x
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309101, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}
       propertyPath: m_Name
@@ -4732,6 +4752,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[0].x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[0].z
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309101, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}
       propertyPath: m_Name
@@ -5066,7 +5101,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846900779}
-  m_LocalRotation: {x: 0.2381335, y: 0.00000001882955, z: -0.000000004616756, w: 0.9712325}
+  m_LocalRotation: {x: 0.23813353, y: -0.000000026227928, z: 0.0000000064307497, w: 0.9712325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5140,6 +5175,26 @@ PrefabInstance:
         type: 3}
       propertyPath: _enemyState
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[0].z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[1].z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309101, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}
@@ -5377,7 +5432,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978183476}
-  m_LocalRotation: {x: 0.23813353, y: 0.00000002604765, z: -0.0000000056954916, w: 0.9712325}
+  m_LocalRotation: {x: 0.2381335, y: -0.000000019009821, z: 0.0000000053519784, w: 0.9712325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5759,8 +5814,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}
+      propertyPath: GuardingPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
       propertyPath: _enemyState
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[2].x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[2].z
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309101, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}
@@ -7107,12 +7192,12 @@ PrefabInstance:
     - target: {fileID: 1419079751190865400, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000002604765
+      value: -0.000000019009821
       objectReference: {fileID: 0}
     - target: {fileID: 1419079751190865400, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000056954925
+      value: 0.0000000053519793
       objectReference: {fileID: 0}
     - target: {fileID: 1419079751190865400, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
@@ -7452,7 +7537,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964438041}
-  m_LocalRotation: {x: 0.23813352, y: 0.000000011157888, z: 0.0000000036835526, w: 0.9712325}
+  m_LocalRotation: {x: 0.2381335, y: -0.000000020504158, z: 0.000000011446673, w: 0.9712325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7592,7 +7677,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29514
+  m_Name: pb_Mesh14530
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7815,6 +7900,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _enemyState
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[0].x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061065153701309094, guid: b53bbcfcaa2089741b78f076f1004011,
+        type: 3}
+      propertyPath: GuardingPoints.Array.data[1].x
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2061065153701309101, guid: b53bbcfcaa2089741b78f076f1004011,
         type: 3}

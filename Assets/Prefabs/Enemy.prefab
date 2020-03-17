@@ -112,10 +112,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyState: 0
   fleeRange: 5
+  GuardingPoints:
+  - {x: 10, y: 0, z: 10}
+  - {x: 10, y: 0, z: -10}
+  GuardingDistance: 3
   bulletPrefab: {fileID: 5470015935329288411, guid: 30cfec86d2cdc8b4287163a89df66e8a,
     type: 3}
   rippleParticle: {fileID: 6677696307718039251}
   ShotingCooldown: 1
+  MaxPatrolingRange: 3
 --- !u!195 &2061065153701309095
 NavMeshAgent:
   m_ObjectHideFlags: 0

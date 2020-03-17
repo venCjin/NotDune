@@ -7,6 +7,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private EnemyState _enemyState;
     public float fleeRange;
+    public Vector3[] GuardingPoints;
+    public float GuardingDistance;
     public GameObject bulletPrefab;
     private CharacterController _characterController;
     private NavMeshAgent _agent;
@@ -17,6 +19,8 @@ public class EnemyAI : MonoBehaviour
     private EnemyHP _HP;
     public float ShotingCooldown;
     private float _currentTime;
+    private int _index;
+    public float MaxPatrolingRange;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,7 @@ public class EnemyAI : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         _characterController.OnStateChanged += OnStateChanged;
         _HP = GetComponent<EnemyHP>();
-
+        _index = 0;
 
         rippleParticle.Stop();
     }
@@ -73,7 +77,20 @@ public class EnemyAI : MonoBehaviour
         }
         else if (_enemyState == EnemyState.Idle)
         {
+            if(Vector3.Distance(transform.position, GuardingPoints[_index]) > GuardingDistance)
+            {
+                _agent.isStopped = false;
+                _agent.SetDestination(GuardingPoints[_index]);
 
+            }
+            else
+            {
+                _index++;
+                if(_index > GuardingPoints.Length - 1)
+                {
+                    _index = 0;
+                }
+            }
         }
         _currentTime += Time.fixedDeltaTime;
     }
