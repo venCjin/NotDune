@@ -417,7 +417,7 @@ Animator:
   m_GameObject: {fileID: 314570645}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3e186280ac1232749bbf3fd921ffb4ea, type: 2}
+  m_Controller: {fileID: 9100000, guid: d8ee568583b82e14ab3629237115dad3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6747,7 +6747,7 @@ GameObject:
   - component: {fileID: 1563215526}
   - component: {fileID: 1563215530}
   m_Layer: 0
-  m_Name: Cone
+  m_Name: PincerR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8044,7 +8044,7 @@ GameObject:
   - component: {fileID: 2111025183}
   - component: {fileID: 2111025187}
   m_Layer: 0
-  m_Name: Cone
+  m_Name: PincerL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8488,7 +8488,7 @@ Animator:
   m_GameObject: {fileID: 2111025181}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3e186280ac1232749bbf3fd921ffb4ea, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0eeeaac91653ddc4086343ff1999f49b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -8679,6 +8679,21 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 2111025187}
+    - target: {fileID: 1721239150068117975, guid: a08a4e07ef3d3c341b055c757c3021cc,
+        type: 3}
+      propertyPath: pincerL
+      value: 
+      objectReference: {fileID: 2111025187}
+    - target: {fileID: 1721239150068117975, guid: a08a4e07ef3d3c341b055c757c3021cc,
+        type: 3}
+      propertyPath: pincerR
+      value: 
+      objectReference: {fileID: 1563215530}
+    - target: {fileID: 1721239150068117975, guid: a08a4e07ef3d3c341b055c757c3021cc,
+        type: 3}
+      propertyPath: tail
+      value: 
+      objectReference: {fileID: 314570647}
     - target: {fileID: 2043136652743027078, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8778,6 +8793,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106355046632052694, guid: a08a4e07ef3d3c341b055c757c3021cc,
+        type: 3}
+      propertyPath: m_Name
+      value: Tail
       objectReference: {fileID: 0}
     - target: {fileID: 7330175383858499456, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
