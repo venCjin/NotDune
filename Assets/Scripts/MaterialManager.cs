@@ -11,11 +11,11 @@ public class MaterialManager : MonoBehaviour
 
     void Start()
     {
-        materials.Add(GetComponent<SkinnedMeshRenderer>().material);
-        foreach (var m in GetComponentsInChildren<SkinnedMeshRenderer>())
-        {
-            materials.Add(m.material);
-        }
+        materials.Add(GetComponent<Renderer>().material);
+        //foreach (var m in GetComponentsInChildren<Renderer>())
+        //{
+        //    materials.Add(m.material);
+        //}
         UpdateMaterial(typeof(AboveGroundMovementState));
 
         _characterController = FindObjectOfType<CharacterController>();
