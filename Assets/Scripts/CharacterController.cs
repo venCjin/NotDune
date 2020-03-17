@@ -13,6 +13,8 @@ public class CharacterController : MonoBehaviour
     public Transform t;
     public Rigidbody rb;
 
+    public CapsuleCollider capsuleCollider;
+
     [SerializeField] private float _aboveGroundSpeed = 5f;
     [SerializeField] private float _underGroundSpeed = 12f;
 
@@ -41,6 +43,7 @@ public class CharacterController : MonoBehaviour
     {
         t = transform;
         rb = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
         ChangeState(State.AboveGround);
     }
 
@@ -267,7 +270,7 @@ public class CharacterController : MonoBehaviour
     private IEnumerator GoCoroutine(Vector3 direction)
     {
         float timer = 0;
-
+        capsuleCollider.isTrigger = true;
         while (timer < _goTime)
         {
             //float percentage = timer / _goTime;
@@ -281,6 +284,8 @@ public class CharacterController : MonoBehaviour
             t.position = new Vector3(t.position.x, 0.5f, t.position.z);
         else
             t.position = new Vector3(t.position.x, -1f, t.position.z);
+        capsuleCollider.isTrigger = false;
+
     }
 
     private IEnumerator AttackCooldown()
