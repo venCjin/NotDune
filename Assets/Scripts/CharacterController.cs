@@ -16,7 +16,17 @@ public class CharacterController : StateMachine
     }
 
     [SerializeField] private References _references;
+    private int _health = 100;
 
+    public int health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            OnHealthChanged?.Invoke(_health);
+        }
+    }
     public bool isAboveGround
     {
         get
@@ -31,6 +41,7 @@ public class CharacterController : StateMachine
 
     public UnityAction OnHide;
     public UnityAction OnUnhide;
+    public UnityAction<int> OnHealthChanged;
 
     private void Awake()
     {
@@ -56,6 +67,13 @@ public class CharacterController : StateMachine
 
     public void ReceiveDamage(int damage)
     {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+
         _references.colorController.HighLight();
     }
 }

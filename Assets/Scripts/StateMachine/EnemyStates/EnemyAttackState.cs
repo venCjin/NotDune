@@ -10,6 +10,7 @@ public class EnemyAttackState : AbstractState
     [System.Serializable]
     public class Parameters
     {
+        public int maxDamage = 15;
         public float maxShotRange = 7.5f;
         public float minShotRange = 5.0f;
         public AnimationCurve accuracyOfDistance = AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.0f);
@@ -96,7 +97,7 @@ public class EnemyAttackState : AbstractState
 
     private void Shoot(float accuracy)
     {
-        FindObjectOfType<CharacterController>().ReceiveDamage(5);
+        FindObjectOfType<CharacterController>().ReceiveDamage((int)(accuracy * _parameters.maxDamage));
         _references.impulseSource.GenerateImpulse();
 
         _references.shootParticle.Play();

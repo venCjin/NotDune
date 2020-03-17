@@ -335,6 +335,7 @@ MonoBehaviour:
   subStates: []
   actions: []
   _parameters:
+    maxDamage: 40
     maxShotRange: 15
     minShotRange: 5
     accuracyOfDistance:
