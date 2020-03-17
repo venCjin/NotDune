@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     private float _shotRange = 5.0f;
     public ParticleSystem rippleParticle;
     private MeshRenderer meshRenderer;
-    private EnemyHP _HP;
+    private HP _HP;
     public float ShotingCooldown;
     private float _currentTime;
     private int _index;
@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
         meshRenderer = GetComponent<MeshRenderer>();
         _characterController.OnStateChanged += OnStateChanged;
-        _HP = GetComponent<EnemyHP>();
+        _HP = GetComponent<HP>();
         _index = 0;
 
         rippleParticle.Stop();
@@ -40,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDestroy()
     {
         _characterController.OnStateChanged -= OnStateChanged;
-        GameManager.instance.enemiesList.Remove(this);
+        GameManager.instance?.enemiesList.Remove(this);
     }
 
     void FixedUpdate()

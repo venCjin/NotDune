@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHP : MonoBehaviour
+public class HP : MonoBehaviour
 {
     public int MaxHP = 2;
     public int _hp;
@@ -11,7 +11,7 @@ public class EnemyHP : MonoBehaviour
     void Start()
     {
         _hp = MaxHP;
-        _material = GetComponent<MeshRenderer>().material;
+        _material = GetComponentInChildren<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -23,7 +23,8 @@ public class EnemyHP : MonoBehaviour
         }
         if(_hp != MaxHP)
         {
-            _material.color = Color.red;
+            _material.color = new Color((float)_hp/MaxHP, 0.0f, 0.0f);
+            Debug.Log(1 - ((float)_hp / MaxHP));
         }
         else
         {

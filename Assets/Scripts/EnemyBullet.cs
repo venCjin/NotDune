@@ -9,6 +9,7 @@ public class EnemyBullet : MonoBehaviour
     public float lifetime;
     private float _currnentTime;
     private Rigidbody rb;
+    private HP _hp = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,19 @@ public class EnemyBullet : MonoBehaviour
         if(_currnentTime > lifetime)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(_hp = other.gameObject.GetComponent<HP>())
+        {
+            if (other.gameObject.GetComponent<EnemyAI>() == null)
+            {
+                _hp.reduceHP(1);
+                Destroy(gameObject);
+            }
+            
         }
     }
 }

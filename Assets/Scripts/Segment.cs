@@ -10,6 +10,9 @@ public class Segment : MonoBehaviour
     public Transform target;
     private CharacterController _characterController;
     public float _distanceBeetweenSegments;
+    private Material _material;
+    private Material _playerMaterial;
+
 
 
 
@@ -17,8 +20,11 @@ public class Segment : MonoBehaviour
     void Start()
     {
         _speed = AboveGroundSpeed;
-        _characterController = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        _characterController = player.GetComponent<CharacterController>();
         _characterController.OnStateChanged += OnStateChange;
+        _material = GetComponentInChildren<MeshRenderer>().material;
+        _playerMaterial = player.GetComponentInChildren<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class Segment : MonoBehaviour
             transform.Translate(Vector3.forward * step * Time.fixedDeltaTime);
         }
         transform.LookAt(target.position);
-       
+        _material.color = _playerMaterial.color;
     }
 
     private void OnStateChange(CharacterController.State state)

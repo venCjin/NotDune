@@ -95,7 +95,7 @@ public class CharacterController : MonoBehaviour
             }
 
         }
-        rb.velocity = new Vector3(_currentVelocity.x, rb.velocity.y, _currentVelocity.z);
+        rb.velocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);
 
     }
 
@@ -302,7 +302,7 @@ public class CharacterController : MonoBehaviour
         if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
             //_attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
-            other.gameObject.GetComponent<EnemyHP>().reduceHP(1);
+            other.gameObject.GetComponent<HP>().reduceHP(1);
             AttackCooldown();
 
         }
