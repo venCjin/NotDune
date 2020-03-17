@@ -8674,6 +8674,11 @@ PrefabInstance:
       propertyPath: scorpio
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1721239150068117975, guid: a08a4e07ef3d3c341b055c757c3021cc,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2111025187}
     - target: {fileID: 2043136652743027078, guid: a08a4e07ef3d3c341b055c757c3021cc,
         type: 3}
       propertyPath: m_LocalPosition.x
