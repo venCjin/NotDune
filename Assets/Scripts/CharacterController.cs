@@ -198,6 +198,8 @@ public class CharacterController : MonoBehaviour
 
     private void Attack()
     {
+        if (!_canAttack) return;
+
         Vector3 attackDirection = Vector3.zero;
         Vector3 attackVector = Vector3.zero;
 
@@ -234,6 +236,8 @@ public class CharacterController : MonoBehaviour
 
     private bool AttackFromUnderground()
     {
+        if (!_canAttack) return false;
+
         Vector3 attackDirection = Vector3.zero;
         Vector3 attackVector = Vector3.zero;
 
@@ -366,7 +370,7 @@ public class CharacterController : MonoBehaviour
         if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
             other.gameObject.GetComponent<HP>().reduceHP(1);
-            AttackCooldown();
+            StartCoroutine(AttackCooldown());
             _isAttacking = false;
         }
     }
