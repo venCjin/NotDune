@@ -36,7 +36,6 @@ public class EnemyAttackState : AbstractState
 
     private CharacterController _character;
     private IntelligentEnemy _enemy;
-    private EnemyManager _manager;
 
     private float _lastShootTime = 0.0f;
 
@@ -46,25 +45,25 @@ public class EnemyAttackState : AbstractState
     {
         _character = FindObjectOfType<CharacterController>();
         _enemy = GetComponentInParent<IntelligentEnemy>();
-        _manager = FindObjectOfType<EnemyManager>();
     }
 
     public override bool IsStateFinished()
     {
-        return (_manager.canAnybodySeePlayer == false && _enemy.navMeshAgent.remainingDistance < 1.5f);
-        //return (_enemy.canSeeCharacter == false && _enemy.navMeshAgent.remainingDistance == 0.0f);
+        return (_enemy.canSeeCharacter == false);
     }
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
-        return (_manager.canAnybodySeePlayer);
-        //return (_enemy.canSeeCharacter);
+        return (_enemy.canSeeCharacter);
     }
 
     public override void OnStateEnter(ref StateMachine stateMachine)
     {
         _originalAngularSpeed = _enemy.navMeshAgent.angularSpeed;
         _enemy.navMeshAgent.angularSpeed = 0.0f;
+
+        /// Temporary solution to lock shooting for a little moment in situation when we attack from behind and Enemy turnes back and immediately starts shooting.
+        _lastShootTime = Time.time;
     }
 
     public override void OnStateExit()

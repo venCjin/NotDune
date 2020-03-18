@@ -13,7 +13,7 @@ public class GroundBaitSubState : AbstractSubState
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
-        bool buttonPressed = Input.GetKeyDown(KeyCode.LeftShift);
+        bool buttonPressed = Input.GetMouseButtonDown(1);
 
         return buttonPressed;
     }
@@ -36,7 +36,7 @@ public class GroundBaitSubState : AbstractSubState
     
     public override bool IsStateFinished()
     {
-        bool buttonPressed = Input.GetKeyUp(KeyCode.LeftShift);
+        bool buttonPressed = Input.GetMouseButtonUp(1);
 
         return buttonPressed;
     }

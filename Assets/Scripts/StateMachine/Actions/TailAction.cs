@@ -25,7 +25,7 @@ public class TailAction : AbstractAction
 
     private CharacterController _character;
     private float _lastAttackTime = 0;
-    private float _attackCooldown = 2.0f;
+    private float _attackCooldown = 0.4f;
 
     private void Awake()
     {

@@ -1057,7 +1057,7 @@ MonoBehaviour:
   pincerL: {fileID: 2111025187}
   pincerR: {fileID: 1563215530}
   _parameters:
-    damage: 30
+    damage: 60
     hitDistance: 1.5
     layerMask:
       serializedVersion: 2
@@ -1149,9 +1149,10 @@ GameObject:
   - component: {fileID: 5353362775462887339}
   - component: {fileID: 4991879214071065603}
   - component: {fileID: 314570647}
+  - component: {fileID: 2073676371}
   m_Layer: 0
   m_Name: Tail
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1236,6 +1237,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &2073676371
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2279570803070911453}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Center: {x: 0, y: 0.000030517578, z: 0.0000038146973}
 --- !u!1 &3323624669952709462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,6 +2846,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5445980644948252888}
+  - component: {fileID: 850425325}
   m_Layer: 0
   m_Name: SubStates
   m_TagString: Untagged
@@ -2853,6 +2868,18 @@ Transform:
   m_Father: {fileID: 6389796006824332795}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850425325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482888658036339436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5d369e836700343b1a17f0ee0ad999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8958849330480288535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2920,8 +2947,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitions:
   - {fileID: 7682346988265763430}
-  subStates: []
-  actions: []
+  subStates:
+  - {fileID: 850425325}
+  actions:
+  - {fileID: 5532426147134729576}
   _maxSpeed: 11.5
   _acceleration: 8.25
   _deceleration: 6

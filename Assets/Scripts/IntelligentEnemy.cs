@@ -25,6 +25,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
         public GameObject states;
         public ColorController colorController;
         public GameObject geometry;
+        public GameObject UI;
         public NavMeshAgent navMeshAgent;
 
         [Space()]
@@ -50,10 +51,12 @@ public class IntelligentEnemy : StateMachine, IDamageable
     public bool canSeeCharacter { get; private set; }
     public Vector3 lastKnownChatacterPosition { get; private set; }
 
-    public UnityAction OnEnemyTookDamage;
+    public UnityAction<int> OnHealthChanged;
 
     private void Awake()
     {
+        lastKnownChatacterPosition = new Vector3(float.NaN, float.NaN, float.NaN);
+
         _character = FindObjectOfType<CharacterController>();
         _tail = _character.tail;
 
@@ -77,6 +80,10 @@ public class IntelligentEnemy : StateMachine, IDamageable
         {
             lastKnownChatacterPosition = _character.transform.position;
         }
+        else
+        {
+            lastKnownChatacterPosition = new Vector3(float.NaN, float.NaN, float.NaN);
+        }
 
         if (CanSeeBait())
         {
@@ -91,28 +98,21 @@ public class IntelligentEnemy : StateMachine, IDamageable
         _references.rippleParticle.Stop();
 
         _references.geometry.SetActive(true);
+        _references.UI.SetActive(true);
     }
 
     private void OnCharacterHide()
     {
         _references.rippleParticle.Play();
         _references.geometry.SetActive(false);
+        _references.UI.SetActive(false);
     }
 
     public void ReceiveDamage(int damage)
     {
-        OnEnemyTookDamage?.Invoke();
-
-        if (canSeeCharacter == false)
-        {
-            canSeeCharacter = true;
-            lastKnownChatacterPosition = _character.transform.position;
-
-            Vector3 forward = _character.transform.position - transform.position;
-            transform.rotation = Quaternion.LookRotation(forward);
-        }
 
         _health -= damage;
+        OnHealthChanged?.Invoke(_health);
 
         if (_health <= 0)
         {
@@ -121,6 +121,15 @@ public class IntelligentEnemy : StateMachine, IDamageable
         else
         {
             _references.colorController.HighLight();
+
+            if (canSeeCharacter == false)
+            {
+                canSeeCharacter = true;
+                lastKnownChatacterPosition = _character.transform.position;
+
+                Vector3 forward = _character.transform.position - transform.position;
+                transform.rotation = Quaternion.LookRotation(forward);
+            }
         }
     }
 

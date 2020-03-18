@@ -64,11 +64,7 @@ public class UndergroundAttackAction : AbstractAction
 
             if (enemy != null)
             {
-                if (Mathf.Abs(Vector3.Angle(_character.transform.forward, hit.transform.forward)) < 50f)
-                    enemy.ReceiveDamage(_parameters.damage * 2);
-                else
-                    enemy.ReceiveDamage(_parameters.damage);
-                //Debug.Log(hit.transform.name + " hit!");
+                enemy.ReceiveDamage(_parameters.damage);
             }
         }
 

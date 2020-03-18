@@ -14,13 +14,10 @@ public class EnemyLookAtPlayerAction : AbstractAction
     {
         _character = GetComponent<CharacterController>();
         _enemy = GetComponentInParent<IntelligentEnemy>();
-
-        _enemy.OnEnemyTookDamage += OnEnemyTookDamage;
     }
 
     private void OnDestroy()
     {
-        _enemy.OnEnemyTookDamage -= OnEnemyTookDamage;
     }
 
     private void OnEnemyTookDamage()
