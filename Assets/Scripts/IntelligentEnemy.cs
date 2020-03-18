@@ -18,7 +18,6 @@ public class IntelligentEnemy : StateMachine, IDamageable
         public float angularAcceleration = 10.0f;
     }
 
-
     [System.Serializable]
     public class References
     {
@@ -40,6 +39,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
     [SerializeField] private References _references;
 
     private CharacterController _character;
+    public GameObject _tail;
 
     private int _health = 100;
 
@@ -55,6 +55,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
     private void Awake()
     {
         _character = FindObjectOfType<CharacterController>();
+        _tail = _character.tail;
 
         _character.OnHide += OnCharacterHide;
         _character.OnUnhide += OnCharacterUnhide;
@@ -75,6 +76,12 @@ public class IntelligentEnemy : StateMachine, IDamageable
         if (canSeeCharacter)
         {
             lastKnownChatacterPosition = _character.transform.position;
+        }
+
+        if (CanSeeBait())
+        {
+            lastKnownChatacterPosition = _character.transform.position;
+            this.ChangePrimaryState(this.states.GetComponent<EnemySearchState>());
         }
     }
 
@@ -136,6 +143,27 @@ public class IntelligentEnemy : StateMachine, IDamageable
         Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
 
         return (hit.transform == _character.transform);
+    }
+
+    private bool CanSeeBait()
+    {
+        if (_character.isGroundBait == false)
+        {
+            return false;
+        }
+
+        Vector3 direction = _tail.transform.position - transform.position;
+        Ray ray = new Ray(transform.position, direction);
+
+        direction.y = 0.0f;
+        if (Vector3.Angle(direction, transform.forward) > _parameters.angle)
+        {
+            return false;
+        }
+
+        Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
+
+        return (hit.collider && hit.collider.name == _tail.name);
     }
 
     private void OnDrawGizmos()

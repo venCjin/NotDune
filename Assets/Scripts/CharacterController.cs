@@ -35,6 +35,7 @@ public class CharacterController : StateMachine
         }
     }
     public bool isGroundBait = false;
+    public GameObject tail;
 
     public new Transform transform { get => _references.transform; }
     public new Rigidbody rigidbody { get => _references.rigidbody; }

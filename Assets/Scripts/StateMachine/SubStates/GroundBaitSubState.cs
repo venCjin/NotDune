@@ -20,7 +20,6 @@ public class GroundBaitSubState : AbstractSubState
     
     public override void OnStateEnter(ref StateMachine stateMachine)
     {
-        // wystaw ogon
         _character.rigidbody.transform.position += new Vector3(0.0f, 0.5f, 0.0f);
         _character.isGroundBait = true;
     }
@@ -44,7 +43,6 @@ public class GroundBaitSubState : AbstractSubState
     
     public override void OnStateExit()
     {
-        // showaj ogon
         _character.rigidbody.transform.position -= new Vector3(0.0f, 0.5f, 0.0f);
         _character.isGroundBait = false;
     }
