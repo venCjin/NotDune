@@ -40,7 +40,6 @@ public class IntelligentEnemy : StateMachine, IDamageable
     [SerializeField] private References _references;
 
     private CharacterController _character;
-    public GameObject _tail;
 
     private int _health = 100;
 
@@ -58,7 +57,6 @@ public class IntelligentEnemy : StateMachine, IDamageable
         lastKnownChatacterPosition = new Vector3(float.NaN, float.NaN, float.NaN);
 
         _character = FindObjectOfType<CharacterController>();
-        _tail = _character.tail;
 
         _character.OnHide += OnCharacterHide;
         _character.OnUnhide += OnCharacterUnhide;
@@ -161,7 +159,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
             return false;
         }
 
-        Vector3 direction = _tail.transform.position - transform.position;
+        Vector3 direction = _character.tail.transform.position - transform.position;
         Ray ray = new Ray(transform.position, direction);
 
         direction.y = 0.0f;
@@ -172,7 +170,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
 
         Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
 
-        return (hit.collider && hit.collider.name == _tail.name);
+        return (hit.collider && hit.collider.name == _character.tail.name);
     }
 
     private void OnDrawGizmos()
