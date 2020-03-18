@@ -15,7 +15,9 @@ public class CharacterController : MonoBehaviour
 
     public CapsuleCollider capsuleCollider;
 
-    [SerializeField] private float _aboveGroundSpeed = 5f;
+    public HP hp;
+
+    [SerializeField] private float _aboveGroundSpeed = 6.5f;
     [SerializeField] private float _underGroundSpeed = 12f;
 
     [SerializeField] private float _currentMaxSpeed = 0f;
@@ -38,12 +40,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField] GameObject _attackedEnemy = null;
 
 
-    [SerializeField] private float _goTime = 0f;
+    [SerializeField] private float _goTime = 0.1f;
     private void Start()
     {
         t = transform;
         rb = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        hp = GetComponent<HP>();
         ChangeState(State.AboveGround);
     }
 
@@ -61,6 +64,7 @@ public class CharacterController : MonoBehaviour
             ChangeState(State.UnderGround);
         }
 
+ 
     }
     private void FixedUpdate()
     {
@@ -164,10 +168,14 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-        bool attack = false;
+        if (!AttackFromUnderground())
+            StartCoroutine(GoCoroutine(Vector3.up * 1.5f));
+
+
+        /*bool attack = false;
         foreach (EnemyAI enemy in GameManager.instance.enemiesList)
         {
-            if (Vector3.Distance(new Vector3(enemy.transform.position.x, 0f, enemy.transform.position.z), new Vector3(t.position.x, 0f, t.position.z)) < _underGroundAttackRadius)
+            if (Vector3.Dot(attackDirection, t.forward) > 0.6f && Vector3.Distance(new Vector3(enemy.transform.position.x, 0f, enemy.transform.position.z), new Vector3(t.position.x, 0f, t.position.z)) < _underGroundAttackRadius)
             {
                 _attackedEnemy = enemy.gameObject;
                 attack = true;
@@ -177,8 +185,7 @@ public class CharacterController : MonoBehaviour
         if (attack)
             StartCoroutine(AttackFromUndergroundCoroutine(_attackedEnemy.transform));
         else
-            StartCoroutine(GoCoroutine(Vector3.up * 1.5f));
-
+            */
         //t.position = new Vector3(t.position.x, 0.5f, t.position.z);
 
 
@@ -192,6 +199,8 @@ public class CharacterController : MonoBehaviour
     private void Attack()
     {
         Vector3 attackDirection = Vector3.zero;
+        Vector3 attackVector = Vector3.zero;
+
         Transform enemyTransform = null;
         float previousDistance = _aboveGroundAttackRadius * 2f;
         float distance = 0f;
@@ -199,10 +208,11 @@ public class CharacterController : MonoBehaviour
 
         foreach (EnemyAI enemy in GameManager.instance.enemiesList)
         {
-            distance = attackDirection.magnitude;
-            attackDirection = (enemy.transform.position - t.position).normalized;
+            attackVector = (enemy.transform.position - t.position);
+            distance = attackVector.magnitude;
+            attackDirection = attackVector.normalized;
 
-            if (Vector3.Dot(attackDirection, t.forward) > 0.55f && distance < _aboveGroundAttackRadius)
+            if (Vector3.Dot(attackDirection, t.forward) > 0.6f && distance < _aboveGroundAttackRadius)
             {
                 if (distance < previousDistance)
                 {
@@ -220,8 +230,38 @@ public class CharacterController : MonoBehaviour
             attackDirection = t.forward;
             StartCoroutine(AttackCoroutine(attackDirection, null));
         }
+    }
 
+    private bool AttackFromUnderground()
+    {
+        Vector3 attackDirection = Vector3.zero;
+        Vector3 attackVector = Vector3.zero;
 
+        Transform enemyTransform = null;
+        float previousDistance = _underGroundAttackRadius * 2f;
+        float distance = 0f;
+        bool foundEnemy = false;
+
+        foreach (EnemyAI enemy in GameManager.instance.enemiesList)
+        {
+            attackVector = Vector3.ProjectOnPlane((enemy.transform.position - t.position), Vector3.up);
+            distance = attackVector.magnitude;
+            attackDirection = attackVector.normalized;
+
+            if (Vector3.Dot(attackDirection, t.forward) > 0.6f && distance < _underGroundAttackRadius)
+            {
+                if (distance < previousDistance)
+                {
+                    enemyTransform = enemy.transform;
+                    previousDistance = distance;
+                    foundEnemy = true;
+                }
+            }
+        }
+        if (foundEnemy)
+            StartCoroutine(AttackFromUndergroundCoroutine(enemyTransform));
+        
+        return foundEnemy;
     }
 
     private IEnumerator AttackCoroutine(Vector3 attackDirection, Transform enemyTransform)
@@ -307,15 +347,29 @@ public class CharacterController : MonoBehaviour
         _canAttack = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
             //_attackedEnemy.GetComponent<EnemyHP>().reduceHP(1);
             other.gameObject.GetComponent<HP>().reduceHP(1);
             AttackCooldown();
-
         }
+    }*/
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
+        {
+            other.gameObject.GetComponent<HP>().reduceHP(1);
+            AttackCooldown();
+            _isAttacking = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.ReloadScene();
     }
 
 }
