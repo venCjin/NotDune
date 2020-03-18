@@ -292,6 +292,8 @@ public class CharacterController : MonoBehaviour
         _currentVelocity *= 0.2f;
         //_attackedEnemy = null;
         _isAttacking = false;
+        StartCoroutine(AttackCooldown());
+
     }
 
     private IEnumerator AttackFromUndergroundCoroutine(Transform enemyTransform)
@@ -322,6 +324,8 @@ public class CharacterController : MonoBehaviour
         _currentVelocity *= 0.2f;
         //_attackedEnemy = null;
         _isAttacking = false;
+        StartCoroutine(AttackCooldown());
+
     }
 
 
@@ -370,7 +374,6 @@ public class CharacterController : MonoBehaviour
         if (other.CompareTag("Enemy") && _isAttacking && _canAttack)
         {
             other.gameObject.GetComponent<HP>().reduceHP(1);
-            StartCoroutine(AttackCooldown());
             _isAttacking = false;
         }
     }
