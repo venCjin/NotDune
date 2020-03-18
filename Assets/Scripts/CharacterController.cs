@@ -254,6 +254,7 @@ public class CharacterController : MonoBehaviour
                 {
                     enemyTransform = enemy.transform;
                     previousDistance = distance;
+                    _attackedEnemy = enemy.gameObject;
                     foundEnemy = true;
                 }
             }
@@ -285,7 +286,7 @@ public class CharacterController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         _currentVelocity *= 0.2f;
-        _attackedEnemy = null;
+        //_attackedEnemy = null;
         _isAttacking = false;
     }
 
@@ -302,9 +303,12 @@ public class CharacterController : MonoBehaviour
             if (enemyTransform)
             {
                 enemyVector = (enemyTransform.position - t.position);
+                t.rotation = Quaternion.Lerp(t.rotation, Quaternion.LookRotation(enemyVector.normalized), _attackAcceleration * Time.fixedDeltaTime);
+
+                Debug.Log("enemyTransform.position: " + enemyTransform.position);
                 //Vector3 attackDirection = Vector3.ProjectOnPlane(enemyVector.normalized, Vector3.up);
             }
-            t.Translate(enemyVector * (Time.fixedDeltaTime / _goTime));
+            t.Translate(enemyVector * (Time.fixedDeltaTime / _goTime), Space.World);
 
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
@@ -312,7 +316,7 @@ public class CharacterController : MonoBehaviour
         t.position = new Vector3(t.position.x, 0.5f, t.position.z);
 
         _currentVelocity *= 0.2f;
-        _attackedEnemy = null;
+        //_attackedEnemy = null;
         _isAttacking = false;
     }
 
