@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class AttackAction : AbstractAction
 {
-    public Animator pincerL;
-    public Animator pincerR;
-
     [System.Serializable]
     public class Parameters
     {
@@ -19,6 +16,8 @@ public class AttackAction : AbstractAction
     public class References
     {
         public Cinemachine.CinemachineImpulseSource impulseSource;
+        //public Animator pincerL;
+        //public Animator pincerR;
     }
 
     [SerializeField] private Parameters _parameters;
@@ -48,8 +47,8 @@ public class AttackAction : AbstractAction
 
     public override void OnActionPerformed()
     {
-        pincerL.SetTrigger("pincer");
-        pincerR.SetTrigger("pincer");
+        //pincerL.SetTrigger("pincer");
+        //pincerR.SetTrigger("pincer");
 
         Ray ray = new Ray(_character.transform.position, _character.transform.forward);
         var hits = Physics.SphereCastAll(ray, 1.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);

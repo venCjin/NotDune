@@ -11,11 +11,10 @@ public class MaterialManager : MonoBehaviour
 
     void Start()
     {
-        materials.Add(GetComponent<Renderer>().material);
-        //foreach (var m in GetComponentsInChildren<Renderer>())
-        //{
-        //    materials.Add(m.material);
-        //}
+        foreach (var m in GetComponentsInChildren<Renderer>())
+        {
+            materials.Add(m.material);
+        }
         UpdateMaterial(typeof(AboveGroundMovementState));
 
         _characterController = FindObjectOfType<CharacterController>();

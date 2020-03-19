@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class UndergroundAttackAction : AbstractAction
 {
-    public Animator pincerL;
-    public Animator pincerR;
-
     [System.Serializable]
     public class Parameters
     {
@@ -19,6 +16,8 @@ public class UndergroundAttackAction : AbstractAction
     public class References
     {
         public Cinemachine.CinemachineImpulseSource impulseSource;
+        //public Animator pincerL;
+        //public Animator pincerR;
     }
 
     [SerializeField] private Parameters _parameters;
@@ -48,8 +47,8 @@ public class UndergroundAttackAction : AbstractAction
 
     public override void OnActionPerformed()
     {
-        pincerL.SetTrigger("pincer");
-        pincerR.SetTrigger("pincer");
+        //pincerL.SetTrigger("pincer");
+        //pincerR.SetTrigger("pincer");
 
         // wyskocz 
         _character.ChangePrimaryState(_character._currentState.transitions[0]);

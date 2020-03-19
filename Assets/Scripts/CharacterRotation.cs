@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CharacterRotation : MonoBehaviour
 {
+    public enum LookDirection { Camera, Movement}
+
+    [SerializeField] LookDirection _lookDirection = LookDirection.Movement;
     private CharacterController _character;
 
     private void Awake()
@@ -13,10 +16,24 @@ public class CharacterRotation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var forward = Camera.main.transform.forward;
-        forward = Vector3.ProjectOnPlane(forward, Vector3.up);
-        forward.Normalize();
+        if (_lookDirection == LookDirection.Camera)
+        {
+            var forward = Camera.main.transform.forward;
+            forward = Vector3.ProjectOnPlane(forward, Vector3.up);
+            forward.Normalize();
 
-        _character.transform.rotation = Quaternion.LookRotation(forward);
+            _character.transform.rotation = Quaternion.LookRotation(forward);
+        }
+        else if (_lookDirection == LookDirection.Movement)
+        {
+            var forward = _character.rigidbody.velocity;
+            forward = Vector3.ProjectOnPlane(forward, Vector3.up);
+            forward.Normalize();
+
+            if (forward.sqrMagnitude > 0.0f)
+            {
+                _character.transform.rotation = Quaternion.LookRotation(forward);
+            }
+        }
     }
 }

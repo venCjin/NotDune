@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TailAction : AbstractAction
 {
-    public Animator tail;
 
     [System.Serializable]
     public class Parameters
@@ -18,6 +17,7 @@ public class TailAction : AbstractAction
     public class References
     {
         public Cinemachine.CinemachineImpulseSource impulseSource;
+        //public Animator tail;
     }
 
     [SerializeField] private Parameters _parameters;
@@ -47,7 +47,7 @@ public class TailAction : AbstractAction
 
     public override void OnActionPerformed()
     {
-        tail.SetTrigger("tail");
+        //tail.SetTrigger("tail");
 
         Ray ray = new Ray(_character.transform.position, _character.transform.forward);
         var hits = Physics.SphereCastAll(ray, 0.5f, _parameters.hitDistance, _parameters.layerMask.value, QueryTriggerInteraction.Ignore);

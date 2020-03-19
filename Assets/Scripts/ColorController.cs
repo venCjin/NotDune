@@ -16,7 +16,7 @@ public class ColorController : MonoBehaviour
 
     private void Awake()
     {
-        _material = GetComponent<Renderer>().material;
+        _material = GetComponentInChildren<Renderer>().material;
         _idleColor = _material.color;
     }
 
