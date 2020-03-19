@@ -154,23 +154,25 @@ public class IntelligentEnemy : StateMachine, IDamageable
 
     private bool CanSeeBait()
     {
-        if (_character.isGroundBait == false)
-        {
-            return false;
-        }
+        return false;
 
-        Vector3 direction = _character.tail.transform.position - transform.position;
-        Ray ray = new Ray(transform.position, direction);
+        //if (_character.isGroundBait == false)
+        //{
+        //    return false;
+        //}
 
-        direction.y = 0.0f;
-        if (Vector3.Angle(direction, transform.forward) > _parameters.angle)
-        {
-            return false;
-        }
+        //Vector3 direction = _character.tail.transform.position - transform.position;
+        //Ray ray = new Ray(transform.position, direction);
 
-        Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
+        //direction.y = 0.0f;
+        //if (Vector3.Angle(direction, transform.forward) > _parameters.angle)
+        //{
+        //    return false;
+        //}
 
-        return (hit.collider && hit.collider.name == _character.tail.name);
+        //Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
+
+        //return (hit.collider && hit.collider.name == _character.tail.name);
     }
 
     private void OnDrawGizmos()
