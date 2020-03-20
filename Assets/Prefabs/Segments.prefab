@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566211650581083804}
   - component: {fileID: 1566211650581083801}
+  - component: {fileID: 7997969794520928041}
   m_Layer: 0
   m_Name: Segment
   m_TagString: Untagged
@@ -75,10 +76,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5fa6c42af37a3448da47fc545affc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AboveGroundSpeed: 5
-  UnderGroundSpeed: 10
-  target: {fileID: 0}
-  _distanceBeetweenSegments: 0.6
+  _target: {fileID: 0}
+--- !u!54 &7997969794520928041
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566211650581083805}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1566211651420025000
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +104,7 @@ GameObject:
   - component: {fileID: 1566211651420025003}
   - component: {fileID: 1566211651420024996}
   - component: {fileID: 1566211651420024997}
+  - component: {fileID: 1506739579376736126}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -158,6 +173,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1506739579376736126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566211651420025000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1950f135dcf715f4191b337ab73d78d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials: []
 --- !u!1 &1566211651679861066
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +197,7 @@ GameObject:
   - component: {fileID: 1566211651679861061}
   - component: {fileID: 1566211651679861062}
   - component: {fileID: 1566211651679861063}
+  - component: {fileID: 6417006322471673865}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -237,6 +266,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6417006322471673865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566211651679861066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1950f135dcf715f4191b337ab73d78d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials: []
 --- !u!1 &1566211651731879542
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566211651772625787}
   - component: {fileID: 1566211651772625780}
+  - component: {fileID: 3907387702990457113}
   m_Layer: 0
   m_Name: Segment
   m_TagString: Untagged
@@ -312,10 +355,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5fa6c42af37a3448da47fc545affc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AboveGroundSpeed: 5
-  UnderGroundSpeed: 10
-  target: {fileID: 1566211651731879537}
-  _distanceBeetweenSegments: 0.6
+  _target: {fileID: 0}
+--- !u!54 &3907387702990457113
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566211651772625784}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7952476761414934316
 GameObject:
   m_ObjectHideFlags: 0
