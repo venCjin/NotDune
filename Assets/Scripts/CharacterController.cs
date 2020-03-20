@@ -7,6 +7,13 @@ using UnityEngine.Events;
 public class CharacterController : StateMachine
 {
     [System.Serializable]
+    public class Parameters
+    {
+        public float airUsageTime = 5.0f;
+        public float airRestoreTime = 3.0f;
+    }
+
+    [System.Serializable]
     public class References
     {
         public Transform transform;
@@ -15,16 +22,18 @@ public class CharacterController : StateMachine
         public ColorController colorController;
     }
 
+    [SerializeField] private Parameters _parameters;
     [SerializeField] private References _references;
-    private int _health = 100;
+    private float _health = 100.0f;
+    private float _air = 100.0f;
 
     public int health
     {
-        get => _health;
+        get => (int)(_health);
         set
         {
-            _health = value;
-            OnHealthChanged?.Invoke(_health);
+            _health = (int)(value);
+            OnHealthChanged?.Invoke((int)(_health));
         }
     }
     public bool isAboveGround
@@ -34,6 +43,13 @@ public class CharacterController : StateMachine
             return (_currentState is AboveGroundMovementState);
         }
     }
+
+    public int air
+    {
+        get => (int)(_air);
+        private set => _air = value;
+    }
+
     public bool isGroundBait = false;
     public GameObject tail;
 
@@ -53,6 +69,22 @@ public class CharacterController : StateMachine
     private void OnDestroy()
     {
         OnStateChanged -= OnCharacterStateChanged;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (isAboveGround)
+        {
+            _air += Time.deltaTime * 100.0f / _parameters.airRestoreTime;
+        }
+        else
+        {
+            _air -= Time.deltaTime * 100.0f / _parameters.airUsageTime;
+        }
+
+        _air = Mathf.Clamp(_air, 0.0f, 100.0f);
     }
 
     private void OnCharacterStateChanged(Type type)
