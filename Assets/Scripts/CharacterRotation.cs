@@ -27,12 +27,10 @@ public class CharacterRotation : MonoBehaviour
         else if (_lookDirection == LookDirection.Movement)
         {
             var forward = _character.rigidbody.velocity;
+            forward = Vector3.ProjectOnPlane(forward, Vector3.up);
 
             if (forward.magnitude> 0.1f)
             {
-                forward = Vector3.ProjectOnPlane(forward, Vector3.up);
-                forward.Normalize();
-
                 _character.transform.rotation = Quaternion.LookRotation(forward);
             }
         }
