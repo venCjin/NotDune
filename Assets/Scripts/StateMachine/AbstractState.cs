@@ -9,7 +9,7 @@ public abstract class AbstractState : MonoBehaviour
     public AbstractAction[] actions;
 
     virtual public bool IsStateReady(ref StateMachine stateMachine) { return false; }
-    virtual public void OnStateEnter(ref StateMachine stateMachine) { }
+    virtual public void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState) { }
     virtual public void OnStateUpdate(ref StateMachine stateMachine) { }
     virtual public void OnStateFixedUpdate(ref StateMachine stateMachine) { }
     virtual public bool IsStateFinished() { return true; }

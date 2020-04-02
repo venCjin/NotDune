@@ -1,56 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &811217254
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 811217255}
-  - component: {fileID: 811217256}
-  m_Layer: 0
-  m_Name: TailAttack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &811217255
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811217254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1811461184778026222}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &811217256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811217254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a0cb2aaa70be94296d6a8201dffea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _parameters:
-    damage: 50
-    hitDistance: 1.5
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 256
-  _references:
-    impulseSource: {fileID: 3515797304309582837}
 --- !u!1 &2021776211
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +51,8 @@ MonoBehaviour:
       m_Bits: 256
   _references:
     impulseSource: {fileID: 3515797304309582837}
+    pincerL: {fileID: 8342184226920929875}
+    pincerR: {fileID: 7359151568125678619}
 --- !u!1 &75668706776610643
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 572c79c16577cb345b6ca039684d0079, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -734,7 +685,7 @@ GameObject:
   - component: {fileID: 3644389245347817657}
   - component: {fileID: 1763488209374773066}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Segment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -917,7 +868,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1811461184778026222}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5532426147134729576
 MonoBehaviour:
@@ -939,6 +890,8 @@ MonoBehaviour:
       m_Bits: 256
   _references:
     impulseSource: {fileID: 3515797304309582837}
+    pincerL: {fileID: 8342184226920929875}
+    pincerR: {fileID: 7359151568125678619}
 --- !u!1 &1800342565084284062
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,8 +924,8 @@ RectTransform:
   m_Father: {fileID: 5938267258756929877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1045,7 +998,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 5.025001, y: 0}
   m_SizeDelta: {x: 20.05, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1145,7 +1098,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 572c79c16577cb345b6ca039684d0079, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1766,6 +1719,7 @@ MonoBehaviour:
   _parameters:
     airUsageTime: 5
     airRestoreTime: 3
+    timeToSmother: 7
   _references:
     transform: {fileID: 6389796006824332795}
     rigidbody: {fileID: 6389796006824332792}
@@ -1893,7 +1847,7 @@ RectTransform:
   m_GameObject: {fileID: 6503454806751272553}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0125, y: 0.1, z: 0.0075}
   m_Children:
   - {fileID: 5277813028391769113}
   - {fileID: 8053448512066403222}
@@ -1903,7 +1857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.45}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4607822107541082186
@@ -2174,6 +2128,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7584928410464776770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9010708904969990844}
+  - component: {fileID: 7979287715271173905}
+  m_Layer: 0
+  m_Name: Tail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9010708904969990844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7584928410464776770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1811461184778026222}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7979287715271173905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7584928410464776770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a0cb2aaa70be94296d6a8201dffea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parameters:
+    damage: 50
+    hitDistance: 1.5
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 256
+  _references:
+    impulseSource: {fileID: 0}
 --- !u!1 &7648769354891943787
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,8 +2311,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2021776212}
-  - {fileID: 811217255}
   - {fileID: 4826517959063635010}
+  - {fileID: 9010708904969990844}
   m_Father: {fileID: 6389796006824332795}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2362,6 +2367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5445980644948252888}
   - component: {fileID: 850425325}
+  - component: {fileID: 1592590082}
   m_Layer: 0
   m_Name: SubStates
   m_TagString: Untagged
@@ -2395,6 +2401,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5d369e836700343b1a17f0ee0ad999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1592590082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482888658036339436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5d369e836700343b1a17f0ee0ad999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8958849330480288535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,6 +2424,7 @@ GameObject:
   - component: {fileID: 6848882549984783063}
   - component: {fileID: 7682346988265763430}
   - component: {fileID: 1921396482333520963}
+  - component: {fileID: 428002651}
   m_Layer: 0
   m_Name: States
   m_TagString: Untagged
@@ -2441,10 +2460,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitions:
   - {fileID: 1921396482333520963}
+  - {fileID: 428002651}
   subStates: []
   actions:
   - {fileID: 2021776213}
-  - {fileID: 811217256}
   _maxSpeed: 7.5
   _acceleration: 5.25
   _deceleration: 4.75
@@ -2463,9 +2482,33 @@ MonoBehaviour:
   transitions:
   - {fileID: 7682346988265763430}
   subStates:
-  - {fileID: 850425325}
+  - {fileID: 1592590082}
   actions:
   - {fileID: 5532426147134729576}
   _maxSpeed: 11.5
   _acceleration: 8.25
   _deceleration: 6
+--- !u!114 &428002651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958849330480288535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9effb5ecaa8e140baa3a9cba534192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitions:
+  - {fileID: 7682346988265763430}
+  subStates: []
+  actions: []
+  _parameters:
+    maxDistance: 2.5
+    maxAngle: 45
+    duration: 0.4
+    cooldown: 1
+    damage: 50
+  _references:
+    impulseSource: {fileID: 3515797304309582837}

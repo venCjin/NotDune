@@ -12,10 +12,6 @@ public class Segment : MonoBehaviour
     private CharacterController _characterController;
     private Material _material;
     private Material _playerMaterial;
-    //public float AboveGroundSpeed;
-    //public float UnderGroundSpeed;
-    //private float _speed;
-    //public float _distanceBeetweenSegments;
 
 
     void Start()
@@ -33,24 +29,24 @@ public class Segment : MonoBehaviour
 
     private void OnCharacterUnhide()
     {
-        //_speed = AboveGroundSpeed;
     }
 
     private void OnCharacterHide()
     {
-        //_speed = UnderGroundSpeed;
     }
 
     void FixedUpdate()
     {
-        //float step = _speed * Vector3.Distance(target.position, transform.position);
-        /*if (Vector3.Distance(_target.position, transform.position) > _distanceBeetweenSegments)
+        if (Vector3.Distance(_target.position, transform.position) > 0.4f)
         {
-            transform.Translate(Vector3.forward * step * Time.fixedDeltaTime);
-        }*/
+            transform.position = _target.position + (transform.position - _target.position).normalized * 0.4f;
+        }
 
         transform.LookAt(_target.position);
-        _rb.velocity = _t.forward * _characterController.rigidbody.velocity.magnitude;
+
+        //_rb.velocity = _t.forward * _characterController.rigidbody.velocity.magnitude;
+        //transform.position = _target.position +  (transform.position - _target.position).normalized * Mathf.Clamp((transform.position - _target.position).magnitude, 0.0f, 0.60f);
+
         _material.color = _playerMaterial.color;
     }
 

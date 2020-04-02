@@ -87,6 +87,8 @@ public class StateMachine : MonoBehaviour
 
     public void ChangePrimaryState(AbstractState newState)
     {
+        var previousState = _currentState;
+
         if (_currentState != null)
             _currentState.OnStateExit();
 
@@ -99,7 +101,7 @@ public class StateMachine : MonoBehaviour
         _currentState = newState;
 
         var stateMachine = this;
-        _currentState.OnStateEnter(ref stateMachine);
+        _currentState.OnStateEnter(ref stateMachine, previousState);
 
         OnStateChanged?.Invoke(_currentState.GetType());
     }

@@ -57,7 +57,7 @@ public class EnemyAttackState : AbstractState
         return (_enemy.canSeeCharacter);
     }
 
-    public override void OnStateEnter(ref StateMachine stateMachine)
+    public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
     {
         _originalAngularSpeed = _enemy.navMeshAgent.angularSpeed;
         _enemy.navMeshAgent.angularSpeed = 0.0f;

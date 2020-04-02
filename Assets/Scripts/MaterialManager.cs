@@ -34,7 +34,7 @@ public class MaterialManager : MonoBehaviour
     {
         foreach (var material in materials)
         {
-            _onSurface = (state == typeof(AboveGroundMovementState));
+            _onSurface = (state == typeof(AboveGroundMovementState) || state == typeof(HeavyAttackState));
             //if (state == typeof(AboveGroundMovementState))
             if (_onSurface)
             {

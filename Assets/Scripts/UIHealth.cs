@@ -12,17 +12,10 @@ public class UIHealth : MonoBehaviour
     private void Awake()
     {
         _character = FindObjectOfType<CharacterController>();
-
-        _character.OnHealthChanged += OnCharacterHealthChanged;
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        _character.OnHealthChanged -= OnCharacterHealthChanged;
-    }
-
-    private void OnCharacterHealthChanged(int health)
-    {
-        _text.text = health.ToString();
+        _text.text = _character.health.ToString();
     }
 }

@@ -27,7 +27,7 @@ public class EnemyIdleState : AbstractState
         return true;
     }
 
-    public override void OnStateEnter(ref StateMachine stateMachine)
+    public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
     {
         _enemy.navMeshAgent.destination = _originalPosition;
         _enemy.navMeshAgent.isStopped = false;

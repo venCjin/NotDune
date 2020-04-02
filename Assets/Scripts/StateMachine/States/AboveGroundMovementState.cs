@@ -30,9 +30,12 @@ public class AboveGroundMovementState : AbstractState
         return (true);
     }
 
-    public override void OnStateEnter(ref StateMachine stateMachine)
+    public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
     {
-        _characterController.rigidbody.transform.position += 2f * Vector3.up;
+        if (previousState is UnderGroundMovementState)
+        {
+            _characterController.rigidbody.transform.position += 2f * Vector3.up;
+        }
 
         _characterController.rigidbody.velocity = Vector3.zero;
         _characterController.rigidbody.useGravity = true;

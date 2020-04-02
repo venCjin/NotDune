@@ -11,17 +11,10 @@ public class UIHealthBar : MonoBehaviour
     private void Awake()
     {
         _character = FindObjectOfType<CharacterController>();
-
-        _character.OnHealthChanged += OnCharacterHealthChanged;
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        _character.OnHealthChanged -= OnCharacterHealthChanged;
-    }
-
-    private void OnCharacterHealthChanged(int health)
-    {
-        _image.fillAmount = 0.5f * (1.0f * health) / (100.0f);
+        _image.fillAmount = 0.5f * (1.0f * _character.health) / (100.0f);
     }
 }

@@ -44,7 +44,7 @@ public class EnemyPatrolState : AbstractState
         return (_manager.canAnybodySeePlayer == false);
     }
 
-    public override void OnStateEnter(ref StateMachine stateMachine)
+    public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
     {
         Vector3 direction = Random.onUnitSphere;
         direction.y = 0.0f;

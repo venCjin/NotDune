@@ -26,6 +26,7 @@ public class EnemySearchState : AbstractState
 
     private Vector3 _targetPosition;
     private float _behaviourTime = 0.0f;
+    private float _waitingTime = 0.0f;
 
     private CharacterController _character;
     private IntelligentEnemy _enemy;
@@ -48,7 +49,7 @@ public class EnemySearchState : AbstractState
         return (_manager.canAnybodySeePlayer);
     }
 
-    public override void OnStateEnter(ref StateMachine stateMachine)
+    public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
     {
         _behaviourTime = 0.0f;
 
@@ -78,18 +79,26 @@ public class EnemySearchState : AbstractState
 
     public override void OnStateFixedUpdate(ref StateMachine stateMachine)
     {
-        if (_enemy.navMeshAgent.remainingDistance < 1.5f)
+        if (_enemy.navMeshAgent.remainingDistance < 1.0f)
         {
-            Vector3 direction = Random.onUnitSphere;
-            direction.y = 0.0f;
-            direction.Normalize();
-
-            float distance = Random.Range(_parameters.minDistance, _parameters.maxDistance);
-
-            _targetPosition = _enemy.transform.position + direction * distance;
-
-            _enemy.navMeshAgent.destination = _targetPosition;
             _enemy.navMeshAgent.isStopped = false;
+            if (_waitingTime > 3.0f)
+            {
+                _waitingTime = 0.0f;
+
+                Vector3 direction = Random.onUnitSphere;
+                direction.y = 0.0f;
+                direction.Normalize();
+
+                float distance = Random.Range(_parameters.minDistance, _parameters.maxDistance);
+
+                _targetPosition = _enemy.transform.position + direction * distance;
+                _enemy.navMeshAgent.destination = _targetPosition;
+            }
+            else
+            {
+                _waitingTime += Time.fixedDeltaTime;
+            }
         }
     }
 

@@ -420,9 +420,9 @@ MonoBehaviour:
   subStates: []
   actions: []
   _parameters:
-    duration: 20
-    minDistance: 5
-    maxDistance: 10
+    duration: 12.5
+    minDistance: 8
+    maxDistance: 12
 --- !u!1 &688572147959976176
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +581,6 @@ MonoBehaviour:
     rippleParticle: {fileID: 3184824330779713009}
     shootParticle: {fileID: 1012060823134732856}
     impulseSource: {fileID: 688572148312150186}
-  _tail: {fileID: 0}
 --- !u!195 &688572148312150185
 NavMeshAgent:
   m_ObjectHideFlags: 0

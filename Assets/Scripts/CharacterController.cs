@@ -11,6 +11,7 @@ public class CharacterController : StateMachine
     {
         public float airUsageTime = 5.0f;
         public float airRestoreTime = 3.0f;
+        public float timeToSmother = 7.0f;
     }
 
     [System.Serializable]
@@ -40,7 +41,7 @@ public class CharacterController : StateMachine
     {
         get
         {
-            return (_currentState is AboveGroundMovementState);
+            return (!(_currentState is UnderGroundMovementState));
         }
     }
 
@@ -82,9 +83,19 @@ public class CharacterController : StateMachine
         else
         {
             _air -= Time.deltaTime * 100.0f / _parameters.airUsageTime;
+
+            if (_air < 0.0f)
+            {
+                _health -= Time.deltaTime * 100.0f / _parameters.timeToSmother;
+            }
         }
 
         _air = Mathf.Clamp(_air, 0.0f, 100.0f);
+
+        if (health < 0.0f)
+        {
+            ReceiveDamage(0);
+        }
     }
 
     private void OnCharacterStateChanged(Type type)
