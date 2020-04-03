@@ -36,12 +36,12 @@ public class EnemyPatrolState : AbstractState
 
     public override bool IsStateFinished()
     {
-        return (_manager.canAnybodySeePlayer);
+        return true;
     }
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
-        return (_manager.canAnybodySeePlayer == false);
+        return true;
     }
 
     public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)

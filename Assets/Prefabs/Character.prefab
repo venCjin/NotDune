@@ -1717,9 +1717,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentState: {fileID: 7682346988265763430}
   _parameters:
-    airUsageTime: 5
-    airRestoreTime: 3
-    timeToSmother: 7
+    airUsageTime: 4.25
+    airRestoreTime: 4
+    timeToSmother: 4
   _references:
     transform: {fileID: 6389796006824332795}
     rigidbody: {fileID: 6389796006824332792}

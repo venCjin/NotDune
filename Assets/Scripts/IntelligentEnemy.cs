@@ -5,17 +5,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class IntelligentEnemy : StateMachine, IDamageable
 {
     [System.Serializable]
     public class Parameters
     {
-        public float distance = 10.0f;
         public float angle = 45.0f;
         public LayerMask layerMask = 0;
 
         public float angularAcceleration = 10.0f;
+
+        [Space()]
+
+        public AnimationCurve TimeToDetectOverDistance = AnimationCurve.Linear(0.0f, 0.5f, 10.0f, 5.0f);
+        public float TimeToForget = 2.0f;
     }
 
     [System.Serializable]
@@ -40,15 +45,47 @@ public class IntelligentEnemy : StateMachine, IDamageable
     [SerializeField] private References _references;
 
     private CharacterController _character;
+    private EnemyManager _manager;
 
     private int _health = 100;
 
-    public new Transform transform { get => _references.transform; }
-    public GameObject states { get => _references.states; }
-    public NavMeshAgent navMeshAgent { get => _references.navMeshAgent; }
+    private float _lastCharacterSeenTime = 0.0f;
 
-    public bool canSeeCharacter { get; private set; }
-    public Vector3 lastKnownChatacterPosition { get; private set; }
+    public new Transform transform
+    {
+        get => _references.transform;
+    }
+    public GameObject states
+    {
+        get => _references.states;
+    }
+    public NavMeshAgent navMeshAgent
+    {
+        get => _references.navMeshAgent;
+    }
+    public bool canSeeCharacter
+    {
+        get; private set;
+    }
+    public bool hasDetectedCharacter
+    {
+        get; private set;
+    }
+    public Vector3 lastKnownChatacterPosition
+    {
+        get; private set;
+    }
+    public float detectionLevel
+    {
+        get;
+        private set;
+    }
+
+    public Vector3 originalPosition
+    {
+        get;
+        private set;
+    }
 
     public UnityAction<int> OnHealthChanged;
 
@@ -56,10 +93,13 @@ public class IntelligentEnemy : StateMachine, IDamageable
     {
         lastKnownChatacterPosition = new Vector3(float.NaN, float.NaN, float.NaN);
 
+        _manager = FindObjectOfType<EnemyManager>();
         _character = FindObjectOfType<CharacterController>();
 
         _character.OnHide += OnCharacterHide;
         _character.OnUnhide += OnCharacterUnhide;
+
+        originalPosition = transform.position;
     }
 
     private void OnDestroy()
@@ -73,14 +113,11 @@ public class IntelligentEnemy : StateMachine, IDamageable
         base.FixedUpdate();
 
         canSeeCharacter = CanSeeCharacter();
+        hasDetectedCharacter = HasDetectedEnemy();
 
-        if (canSeeCharacter)
+        if (hasDetectedCharacter)
         {
             lastKnownChatacterPosition = _character.transform.position;
-        }
-        else
-        {
-            lastKnownChatacterPosition = new Vector3(float.NaN, float.NaN, float.NaN);
         }
 
         if (CanSeeBait())
@@ -120,9 +157,9 @@ public class IntelligentEnemy : StateMachine, IDamageable
         {
             _references.colorController.HighLight();
 
-            if (canSeeCharacter == false)
+            if (hasDetectedCharacter == false)
             {
-                canSeeCharacter = true;
+                hasDetectedCharacter = true;
                 lastKnownChatacterPosition = _character.transform.position;
 
                 Vector3 forward = _character.transform.position - transform.position;
@@ -147,9 +184,16 @@ public class IntelligentEnemy : StateMachine, IDamageable
             return false;
         }
 
-        Physics.Raycast(ray, out RaycastHit hit, _parameters.distance);
+        float distance = _parameters.TimeToDetectOverDistance.keys.Last().time;
+        Physics.Raycast(ray, out RaycastHit hit, distance);
 
-        return (hit.transform == _character.transform);
+        if (hit.transform == _character.transform)
+        {
+            _lastCharacterSeenTime = Time.time;
+            return true;
+        }
+
+        return false;
     }
 
     private bool CanSeeBait()
@@ -175,6 +219,37 @@ public class IntelligentEnemy : StateMachine, IDamageable
         //return (hit.collider && hit.collider.name == _character.tail.name);
     }
 
+    private bool HasDetectedEnemy()
+    {
+        if (IsCurrentlyInState(typeof(EnemyIdleState)) || IsCurrentlyInState(typeof(EnemyPatrolState)))
+        {
+            if (canSeeCharacter == true)
+            {
+                float distance = Vector3.Distance(transform.position, _character.transform.position);
+                float speed = 1.0f / _parameters.TimeToDetectOverDistance.Evaluate(distance);
+
+                detectionLevel += speed * Time.fixedDeltaTime;
+            }
+            else if (Time.time > _lastCharacterSeenTime + 1.0f)
+            {
+                float speed = 1.0f * _parameters.TimeToForget;
+                detectionLevel -= speed * Time.fixedDeltaTime;
+            }
+        }
+        else if (IsCurrentlyInState(typeof(EnemySearchState)))
+        {
+            detectionLevel = 1.0f;
+        }
+        else if (IsCurrentlyInState(typeof(EnemyAttackState)))
+        {
+            detectionLevel = 1.0f;
+        }
+
+        detectionLevel = Mathf.Clamp01(detectionLevel);
+
+        return (canSeeCharacter && detectionLevel >= 1.0f);
+    }
+
     private void OnDrawGizmos()
     {
         if (_character == null) { return; }
@@ -189,6 +264,17 @@ public class IntelligentEnemy : StateMachine, IDamageable
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _parameters.distance);
+        //Gizmos.DrawWireSphere(transform.position, _parameters.distance);
+
+        float endDistance = _parameters.TimeToDetectOverDistance.keys.Last().time;
+        float endValue = _parameters.TimeToDetectOverDistance.keys.Last().value;
+
+        for (int i = 0; i < 100; i++)
+        {
+            float t = (1.0f * i / 100);
+            Vector3 start = transform.position + t * transform.forward * endDistance;
+            Vector3 ray = transform.up * _parameters.TimeToDetectOverDistance.Evaluate(t * endDistance) / endValue;
+            Gizmos.DrawRay(start, ray);
+        }
     }
 }

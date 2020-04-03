@@ -36,6 +36,7 @@ public class EnemyAttackState : AbstractState
 
     private CharacterController _character;
     private IntelligentEnemy _enemy;
+    private EnemyManager _manager;
 
     private float _lastShootTime = 0.0f;
 
@@ -45,16 +46,17 @@ public class EnemyAttackState : AbstractState
     {
         _character = FindObjectOfType<CharacterController>();
         _enemy = GetComponentInParent<IntelligentEnemy>();
+        _manager = FindObjectOfType<EnemyManager>();
     }
 
     public override bool IsStateFinished()
     {
-        return (_enemy.canSeeCharacter == false);
+        return (_manager.hasAnybodyDetectedPlayer == false);
     }
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
-        return (_enemy.canSeeCharacter);
+        return (_manager.hasAnybodyDetectedPlayer);
     }
 
     public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
@@ -75,12 +77,12 @@ public class EnemyAttackState : AbstractState
 
     public override void OnStateFixedUpdate(ref StateMachine stateMachine)
     {
-        float distanceToDestination = Vector3.Distance(transform.position, _enemy.lastKnownChatacterPosition);
+        float distanceToDestination = Vector3.Distance(transform.position, _manager.lastKnownChatacterPosition);
 
         if (distanceToDestination >= _parameters.minShotRange)
         {
             _enemy.navMeshAgent.isStopped = false;
-            _enemy.navMeshAgent.SetDestination(_enemy.lastKnownChatacterPosition);
+            _enemy.navMeshAgent.SetDestination(_manager.lastKnownChatacterPosition);
         }
         
         if (_enemy.canSeeCharacter)
@@ -110,6 +112,10 @@ public class EnemyAttackState : AbstractState
             }
 
             _enemy.transform.rotation = Quaternion.LookRotation(Vector3.Slerp(_enemy.transform.forward, (_character.transform.position - _enemy.transform.position), _parameters.angularAcceleration * Time.fixedDeltaTime));
+        }
+        else
+        {
+            _enemy.transform.rotation = Quaternion.LookRotation(Vector3.Slerp(_enemy.transform.forward, _enemy.navMeshAgent.velocity, _parameters.angularAcceleration * Time.fixedDeltaTime));
         }
     }
 

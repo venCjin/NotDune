@@ -41,12 +41,12 @@ public class EnemySearchState : AbstractState
 
     public override bool IsStateFinished()
     {
-        return (_behaviourTime > _parameters.duration || _enemy.canSeeCharacter);
+        return (_manager.hasAnybodyDetectedPlayer || _behaviourTime > _parameters.duration);
     }
 
     public override bool IsStateReady(ref StateMachine stateMachine)
     {
-        return (_manager.canAnybodySeePlayer);
+        return (stateMachine.IsCurrentlyInState(typeof(EnemyAttackState)) && _manager.hasAnybodyDetectedPlayer == false);
     }
 
     public override void OnStateEnter(ref StateMachine stateMachine, AbstractState previousState)
@@ -59,13 +59,13 @@ public class EnemySearchState : AbstractState
 
         float distance = Random.Range(_parameters.minDistance, _parameters.maxDistance);
 
-        if (float.IsNaN(_enemy.lastKnownChatacterPosition.sqrMagnitude))
+        if (float.IsNaN(_enemy.lastKnownChatacterPosition.sqrMagnitude) == false)
         {
-            _targetPosition = _manager.lastKnownChatacterPosition + direction * distance;
+            _targetPosition = _enemy.lastKnownChatacterPosition + direction * distance;
         }
         else
         {
-            _targetPosition = _enemy.lastKnownChatacterPosition + direction * distance;
+            _targetPosition = _enemy.originalPosition + direction * distance;
         }
 
         _enemy.navMeshAgent.destination = _targetPosition;
@@ -92,7 +92,7 @@ public class EnemySearchState : AbstractState
 
                 float distance = Random.Range(_parameters.minDistance, _parameters.maxDistance);
 
-                _targetPosition = _enemy.transform.position + direction * distance;
+                _targetPosition = _enemy.originalPosition + direction * distance;
                 _enemy.navMeshAgent.destination = _targetPosition;
             }
             else

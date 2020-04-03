@@ -44,14 +44,13 @@ public class Segment : MonoBehaviour
 
         transform.LookAt(_target.position);
 
-        //_rb.velocity = _t.forward * _characterController.rigidbody.velocity.magnitude;
-        //transform.position = _target.position +  (transform.position - _target.position).normalized * Mathf.Clamp((transform.position - _target.position).magnitude, 0.0f, 0.60f);
-
         _material.color = _playerMaterial.color;
     }
 
     private void OnDestroy()
     {
+        if (_characterController == null) { return; }
+
         _characterController.OnHide -= OnCharacterHide;
         _characterController.OnUnhide -= OnCharacterUnhide;
     }
