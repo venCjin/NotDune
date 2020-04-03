@@ -174,7 +174,7 @@ public class IntelligentEnemy : StateMachine, IDamageable
 
         //return (hit.collider && hit.collider.name == _character.tail.name);
     }
-
+/*
     private void OnDrawGizmos()
     {
         if (_character == null) { return; }
@@ -191,4 +191,5 @@ public class IntelligentEnemy : StateMachine, IDamageable
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _parameters.distance);
     }
+*/
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CharacterController : StateMachine
+public class CharacterController : StateMachine, IDamageable
 {
     [System.Serializable]
     public class Parameters

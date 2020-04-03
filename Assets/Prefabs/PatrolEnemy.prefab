@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 142600452179281241}
   m_Layer: 8
   m_Name: PatrolEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -351,7 +351,6 @@ MonoBehaviour:
     rippleParticle: {fileID: 2613801070799751170}
     shootParticle: {fileID: 468195242598881227}
     impulseSource: {fileID: 142600452179281241}
-  _tail: {fileID: 0}
 --- !u!195 &142600452179281242
 NavMeshAgent:
   m_ObjectHideFlags: 0
