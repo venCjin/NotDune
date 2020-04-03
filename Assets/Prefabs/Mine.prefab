@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parameters:
-    delay: 0.75
+    delay: 0.6
     blastRadius: 4.5
     blastDamage: 60
   _references:

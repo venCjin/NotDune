@@ -37,6 +37,8 @@ public class Mine : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_character == null) { return; }
+
         _character.OnHide -= OnCharacterHide;
         _character.OnUnhide -= OnCharacterUnhide;
     }

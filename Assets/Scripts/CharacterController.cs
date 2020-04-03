@@ -92,8 +92,6 @@ public class CharacterController : StateMachine, IDamageable
 
         _air = Mathf.Clamp(_air, 0.0f, 100.0f);
 
-        _air = 100.0f;
-
         if (health < 0.0f)
         {
             ReceiveDamage(0);
@@ -114,7 +112,7 @@ public class CharacterController : StateMachine, IDamageable
 
     public void ReceiveDamage(int damage)
     {
-        //health -= damage;
+        health -= damage;
 
         if (health <= 0)
         {
