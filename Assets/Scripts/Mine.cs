@@ -28,6 +28,7 @@ public class Mine : MonoBehaviour
 
     private void Start()
     {
+
         _character = FindObjectOfType<CharacterController>();
 
         _character.OnHide += OnCharacterHide;
@@ -62,6 +63,8 @@ public class Mine : MonoBehaviour
 
     IEnumerator Explode()
     {
+        StartCoroutine(Blink());
+
         yield return new WaitForSeconds(_parameters.delay);
 
         Instantiate(_references.explosionEffect, transform.position, transform.rotation);
@@ -89,11 +92,28 @@ public class Mine : MonoBehaviour
 
         Destroy(gameObject);
     }
-/*
-    private void OnDrawGizmos()
+
+    private IEnumerator Blink()
+    {
+        var light = GetComponentInChildren<Light>();
+        var maxIntensity = light.intensity;
+
+        float t = 0.0f;
+
+        while (true)
+        {
+            light.intensity = 0.5f * 150 + 0.5f * Mathf.Sin(20 * t) * 150 * 2.0f;
+
+            t += Time.fixedDeltaTime;
+            yield return null;
+        }
+    }
+
+
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, blastRadius);
+        Gizmos.DrawWireSphere(transform.position, _parameters.blastRadius);
     }
-*/
+
 }
